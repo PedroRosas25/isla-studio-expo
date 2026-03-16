@@ -140,7 +140,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* MENÚ MOBILE FULL SCREEN - FIX DE POSICIONAMIENTO */}
+      {/* MENÚ MOBILE FULL SCREEN - FIX FOOTER VISIBILITY */}
       <AnimatePresence>
         {isOpen && (
           <motion.div 
@@ -148,8 +148,8 @@ const Navbar = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="fixed inset-0 top-0 left-0 w-full h-screen z-[150] bg-zinc-950 flex flex-col justify-center items-center"
-            style={{ position: 'fixed', height: '100vh', width: '100vw' }}
+            className="fixed inset-0 z-[250] bg-zinc-950 flex flex-col items-center"
+            style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
           >
             <div 
               className="absolute inset-0 opacity-[0.07] pointer-events-none" 
@@ -159,7 +159,8 @@ const Navbar = () => {
               }}
             ></div>
 
-            <div className="relative z-10 flex flex-col items-center gap-8 w-full">
+            {/* Contenedor de links con padding superior para no chocar con el logo */}
+            <div className="relative z-10 flex flex-col items-center justify-center flex-1 w-full pt-20">
               {[
                 { name: "Inicio", path: "/", action: scrollToTop },
                 { name: "Servicios", path: "#servicios-info", action: handleScrollToServicios },
@@ -173,7 +174,7 @@ const Navbar = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 * i + 0.2 }}
-                  className="w-full text-center"
+                  className="w-full text-center mb-6"
                 >
                   {link.external ? (
                     <a href={link.path} target="_blank" rel="noreferrer" className="text-5xl font-serif text-brand-cream tracking-tighter hover:text-brand-blue transition-all">
@@ -206,14 +207,15 @@ const Navbar = () => {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.6 }}
                   onClick={handleLogout}
-                  className="mt-4 text-zinc-600 text-[10px] uppercase tracking-[0.5em] font-bold flex items-center gap-2"
+                  className="mt-2 text-zinc-600 text-[10px] uppercase tracking-[0.5em] font-bold flex items-center gap-2"
                 >
                   <LogOut size={14} /> Salir de la terminal
                 </motion.button>
               )}
             </div>
 
-            <div className="absolute bottom-12 flex flex-col items-center gap-2 opacity-20">
+            {/* Detalle inferior - Subido un poco para evitar el notch/barra de navegación */}
+            <div className="relative z-10 pb-12 flex flex-col items-center gap-2 opacity-20">
               <div className="h-[1px] w-40 bg-brand-blue"></div>
               <span className="text-[8px] uppercase tracking-[0.8em] text-brand-cream font-bold">Isla Studio — Expo 2026</span>
             </div>

@@ -3,7 +3,7 @@ import { db, auth } from "../lib/firebase";
 import { collection, query, onSnapshot, updateDoc, doc, orderBy } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { motion, AnimatePresence } from "framer-motion";
-import { Phone, CheckCircle2, Clock, Building2, Search, Filter } from "lucide-react";
+import { Phone, CheckCircle2, Clock, Building2, Search, Filter, Video } from "lucide-react";
 
 const ADMIN_EMAIL = "islastudio39@gmail.com";
 
@@ -127,10 +127,22 @@ const Admin = () => {
 
                   <div>
                     <span className="text-zinc-600 text-[9px] uppercase font-bold block mb-1">Servicios</span>
-                    <p className="text-[10px] text-zinc-400 italic leading-tight">
-                      {pedido.servicios?.join(", ")}
-                    </p>
-                  </div>
+                    <div className="flex flex-col gap-1">
+                        <p className="text-[10px] text-zinc-400 italic leading-tight">
+                        {pedido.servicios?.join(", ")}
+                        </p>
+                        
+                        {/* NUEVO: Mostrar nivel de edición si existe */}
+                        {pedido.nivelEdicion && (
+                        <div className="mt-2 inline-flex items-center gap-1.5 bg-brand-blue/5 border border-brand-blue/20 px-2 py-0.5 rounded-sm">
+                            <Video size={10} className="text-brand-blue" />
+                            <span className="text-[9px] uppercase font-bold text-brand-blue tracking-tighter">
+                            Edición: {pedido.nivelEdicion}
+                            </span>
+                        </div>
+                        )}
+                    </div>
+                    </div>
 
                   <div className="hidden md:block">
                     <span className="text-zinc-600 text-[9px] uppercase font-bold block mb-1">Estado</span>

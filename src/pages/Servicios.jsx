@@ -289,38 +289,67 @@ const Servicios = () => {
         </div>
       </main>
 
-      {/* MODAL DE ÉXITO */}
+      {/* MODAL DE ÉXITO - OPTIMIZADO PARA MÓVIL */}
       <AnimatePresence>
         {showSuccess && (
           <div className="fixed inset-0 z-[300] flex items-center justify-center px-6">
+            {/* Fondo oscuro SOLIDO (Sin blur para evitar lag) */}
             <motion.div 
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={() => setShowSuccess(false)}
-              className="absolute inset-0 bg-zinc-950/80 backdrop-blur-sm"
+              className="absolute inset-0 bg-zinc-950/80" // Quitamos backdrop-blur-sm
             />
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="relative bg-zinc-900 border border-brand-blue/30 p-10 md:p-16 max-w-lg w-full text-center shadow-2xl overflow-hidden"
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }} // Animación más sutil
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              /* Transición simplificada: duración fija es menos costosa que spring en móviles viejos */
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              style={{ 
+                backfaceVisibility: "hidden", 
+                transform: "translateZ(0)",
+                willChange: "transform, opacity" // Le avisa al navegador que se prepare
+              }}
+              className="relative z-50 bg-zinc-900 border border-zinc-800 p-10 text-center max-w-md w-full overflow-hidden shadow-2xl"
             >
-              <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-                  style={{ backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, backgroundSize: '30px 30px' }}>
+              {/* Eliminamos la grilla dinámica por una estática si es necesario, 
+                  o la dejamos pero con un z-index bajo */}
+              <div className="absolute inset-0 opacity-[0.02] pointer-events-none" 
+                   style={{ backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, backgroundSize: '30px 30px' }}>
               </div>
+
               <div className="relative z-10">
                 <div className="w-16 h-16 bg-brand-blue/10 border border-brand-blue/20 rounded-full flex items-center justify-center mx-auto mb-8">
-                  <ArrowUpRight size={32} className="text-brand-blue" />
+                  <ArrowUpRight className="text-brand-blue" size={32} />
+                  {/* Quitamos la animación infinita de rotación que también consume CPU */}
                 </div>
-                <h2 className="text-3xl md:text-4xl font-serif text-brand-cream uppercase tracking-tighter mb-4">
-                  Solicitud <span className="italic text-brand-blue">Procesada</span>
+
+                <h2 className="text-4xl font-serif uppercase tracking-tighter mb-2 text-brand-cream">
+                  Solicitud <br />
+                  <span className="text-brand-blue italic">Procesada</span>
                 </h2>
-                <p className="text-zinc-500 text-[10px] uppercase tracking-[0.2em] leading-relaxed mb-10">
+
+                <p className="text-zinc-500 text-[10px] uppercase tracking-[0.3em] leading-relaxed mb-10 font-medium font-sans">
                   Tu configuración ha sido enviada al equipo de ingeniería visual. Nos contactaremos a la brevedad.
                 </p>
-                <div className="flex flex-col gap-4">
-                  <button onClick={() => { setShowSuccess(false); navigate('/mis-presupuestos'); }} className="w-full py-4 bg-brand-blue text-white text-[10px] uppercase font-bold tracking-[0.3em] hover:bg-blue-600 transition-colors">
+
+                <div className="flex flex-col gap-3">
+                  <button 
+                    onClick={() => {
+                      setShowSuccess(false);
+                      navigate("/mis-presupuestos");
+                    }}
+                    className="w-full bg-brand-blue text-white py-4 text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-blue-600 transition-colors"
+                  >
                     Ver mis pedidos
                   </button>
-                  <button onClick={() => setShowSuccess(false)} className="w-full py-4 border border-zinc-800 text-zinc-500 text-[10px] uppercase font-bold tracking-[0.3em] hover:text-brand-cream hover:border-zinc-600 transition-all">
+                  <button 
+                    onClick={() => setShowSuccess(false)}
+                    className="w-full border border-zinc-800 text-brand-cream py-4 text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-zinc-900 transition-colors"
+                  >
                     Cerrar
                   </button>
                 </div>

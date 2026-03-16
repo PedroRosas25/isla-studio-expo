@@ -35,11 +35,13 @@ const Navbar = () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
+
       setIsOpen(false); 
 
       if (user.email === "islastudio39@gmail.com") {
         navigate("/admin-isla");
       }
+      
     } catch (error) {
       console.error("Error al loguear:", error);
     }
@@ -73,24 +75,24 @@ const Navbar = () => {
     <nav className={`fixed w-full z-[100] transition-all duration-300 ${scrolled ? "py-4 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800" : "py-8 bg-transparent"}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         
-        {/* LOGO */}
+        {/* LOGO - Subí el Z-INDEX a 300 para que se vea sobre el menú */}
         <Link 
           to="/" 
           onClick={scrollToTop} 
-          className={`relative z-[200] flex items-center gap-3 group transition-colors duration-500 ${isOpen ? 'text-brand-cream' : ''}`}
+          className={`relative z-[300] flex items-center gap-3 group transition-colors duration-500 ${isOpen ? 'text-brand-cream' : ''}`}
         >
           <img 
             src="/logo-isla.png" 
             alt="Isla Studio Logo" 
             className="w-8 h-8 object-contain group-hover:scale-110 transition-transform duration-300" 
           />
-          <span className="text-xl font-serif font-bold tracking-tighter text-brand-cream">
+          <span className="text-xl font-serif font-bold tracking-tighter text-brand-cream font-playfair">
             ISLA <span className="italic text-brand-blue">STUDIO</span>
           </span>
         </Link>
 
         {/* LINKS DESKTOP */}
-        <div className="hidden md:flex items-center gap-10">
+        <div className="hidden md:flex items-center gap-10 font-sans">
           <Link to="/" onClick={scrollToTop} className="text-[10px] uppercase tracking-[0.4em] font-bold text-zinc-500 hover:text-brand-blue transition-colors">Inicio</Link>
           <a href="#servicios-info" onClick={handleScrollToServicios} className="text-[10px] uppercase tracking-[0.4em] font-bold text-zinc-500 hover:text-brand-blue transition-colors">Servicios</a>
           
@@ -103,7 +105,7 @@ const Navbar = () => {
             </Link>
           )}
 
-          <div className="flex items-center gap-4 ml-4">
+          <div className="flex items-center gap-4 ml-4 font-sans">
             {user ? (
               <button 
                 onClick={handleLogout}
@@ -131,16 +133,16 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* BOTÓN HAMBURGUESA MOBILE */}
+        {/* BOTÓN HAMBURGUESA - Subí el Z-INDEX a 300 para que la X no desaparezca */}
         <button 
-          className="md:hidden relative z-[200] text-brand-cream p-2 focus:outline-none" 
+          className="md:hidden relative z-[300] text-brand-cream p-2 focus:outline-none" 
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X size={32} strokeWidth={1} /> : <Menu size={32} strokeWidth={1} />}
         </button>
       </div>
 
-      {/* MENÚ MOBILE FULL SCREEN - FIX FOOTER VISIBILITY */}
+      {/* MENÚ MOBILE FULL SCREEN */}
       <AnimatePresence>
         {isOpen && (
           <motion.div 
@@ -159,8 +161,8 @@ const Navbar = () => {
               }}
             ></div>
 
-            {/* Contenedor de links con padding superior para no chocar con el logo */}
-            <div className="relative z-10 flex flex-col items-center justify-center flex-1 w-full pt-20">
+            {/* Contenedor de links centrado */}
+            <div className="relative z-10 flex flex-col items-center justify-center flex-1 w-full pt-10">
               {[
                 { name: "Inicio", path: "/", action: scrollToTop },
                 { name: "Servicios", path: "#servicios-info", action: handleScrollToServicios },
@@ -207,17 +209,17 @@ const Navbar = () => {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.6 }}
                   onClick={handleLogout}
-                  className="mt-2 text-zinc-600 text-[10px] uppercase tracking-[0.5em] font-bold flex items-center gap-2"
+                  className="mt-2 text-zinc-600 text-[10px] uppercase tracking-[0.5em] font-bold flex items-center gap-2 font-sans"
                 >
                   <LogOut size={14} /> Salir de la terminal
                 </motion.button>
               )}
             </div>
 
-            {/* Detalle inferior - Subido un poco para evitar el notch/barra de navegación */}
-            <div className="relative z-10 pb-12 flex flex-col items-center gap-2 opacity-20">
+            {/* Detalle inferior corregido para visibilidad en móvil */}
+            <div className="relative z-10 pb-16 flex flex-col items-center gap-2 opacity-20">
               <div className="h-[1px] w-40 bg-brand-blue"></div>
-              <span className="text-[8px] uppercase tracking-[0.8em] text-brand-cream font-bold">Isla Studio — Expo 2026</span>
+              <span className="text-[8px] uppercase tracking-[0.8em] text-brand-cream font-bold font-sans">Isla Studio — Expo 2026</span>
             </div>
           </motion.div>
         )}

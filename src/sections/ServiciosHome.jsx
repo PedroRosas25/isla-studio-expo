@@ -44,9 +44,11 @@ const ServiciosHome = () => {
             transition={{ duration: 0.8 }}
           >
             <span className="text-brand-blue font-bold tracking-[0.5em] text-[10px] uppercase block mb-6">Expertise Técnico</span>
-            <h2 className="text-6xl md:text-8xl font-serif text-brand-cream leading-[0.85] tracking-tighter uppercase">
-              Servicios <br />
-              <span className="text-brand-blue italic">Especializados.</span>
+            <h2 className="text-5xl md:text-8xl font-serif leading-none tracking-tighter">
+              SERVICIOS <br />
+              <span className="text-brand-blue italic block overflow-hidden text-ellipsis">
+                ESPECIALIZADOS
+              </span>
             </h2>
             <div className="h-[1px] w-40 bg-brand-blue/30 mt-10"></div>
           </motion.div>

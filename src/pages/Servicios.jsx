@@ -31,6 +31,26 @@ const Servicios = () => {
     empresa: "" 
   });
 
+  // Bloquear/Desbloquear scroll cuando aparece el modal
+  useEffect(() => {
+    if (showSuccess) {
+      // Guardamos la posición actual para que no "salte" la pantalla
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflowY = 'scroll'; // Mantiene la barra para que no vibre el layout
+    } else {
+      // Restauramos el scroll
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflowY = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    }
+  }, [showSuccess]);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);

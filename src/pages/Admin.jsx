@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { db, auth } from "../lib/firebase";
-import { collection, query, onSnapshot, updateDoc, doc, orderBy } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { motion, AnimatePresence } from "framer-motion";
-import { Phone, CheckCircle2, Clock, Building2, Search, Filter, Video } from "lucide-react";
+import { Phone, CheckCircle2, Clock, Building2, Search, Filter, Video, Trash2 } from "lucide-react";
+import { collection, query, onSnapshot, updateDoc, doc, orderBy, deleteDoc, writeBatch, getDocs, where } from "firebase/firestore";
 
 const ADMIN_EMAIL = "islastudio39@gmail.com";
 
@@ -43,6 +43,36 @@ const Admin = () => {
     }
   };
 
+  // 1. Borrar un pedido individual
+const borrarPedido = async (id) => {
+  if (window.confirm("¿Estás seguro de que querés eliminar este registro?")) {
+    try {
+      await deleteDoc(doc(db, "presupuestos", id));
+    } catch (error) {
+      console.error("Error al borrar:", error);
+    }
+  }
+};
+
+// 2. Borrar todos los finalizados de una
+const limpiarFinalizados = async () => {
+  if (window.confirm("Se eliminarán todos los pedidos marcados como 'Finalizado'. ¿Continuar?")) {
+    try {
+      const q = query(collection(db, "presupuestos"), where("estado", "==", "Finalizado"));
+      const snapshot = await getDocs(q);
+      const batch = writeBatch(db);
+      
+      snapshot.docs.forEach((doc) => {
+        batch.delete(doc.ref);
+      });
+
+      await batch.commit();
+    } catch (error) {
+      console.error("Error al limpiar finalizados:", error);
+    }
+  }
+};
+
     // Bloqueo de seguridad corregido
   if (loading) {
     return (
@@ -70,33 +100,43 @@ const Admin = () => {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-brand-cream p-6 md:p-12">
+        {/* HEADER CON TÍTULO Y FILTROS */}
         <header className="max-w-7xl mx-auto mb-16 pt-15 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
-        <div className="mt-1"> {/* Este margin-top baja el título */}
+          <div className="mt-1">
             <h2 className="text-6xl md:text-8xl font-serif uppercase tracking-tighter italic text-brand-blue leading-none">
-            Master <span className="text-brand-cream not-italic">Panel</span>
+              Master <span className="text-brand-cream not-italic">Panel</span>
             </h2>
             <div className="h-[1px] w-full bg-brand-blue/30 mt-6 mb-6"></div>
             <p className="text-zinc-500 text-[10px] uppercase tracking-[0.4em] font-bold">
-            Gestión de Presupuestos — Expo Minera 2026
+              Gestión de Presupuestos — Expo Minera 2026
             </p>
-        </div>
+          </div>
 
-        {/* FILTROS */}
-        <div className="flex gap-2 bg-zinc-900/50 p-1 border border-zinc-800 self-end md:self-auto mb-2">
-            {["Todos", "Procesando", "Finalizado"].map(est => (
-            <button
-                key={est}
-                onClick={() => setFiltroEstado(est)}
-                className={`px-4 py-2 text-[10px] uppercase font-bold tracking-widest transition-all ${
-                filtroEstado === est ? 'bg-brand-blue text-white' : 'text-zinc-500 hover:text-brand-cream'
-                }`}
+          {/* CONTENEDOR DE BOTONES (FILTROS + LIMPIEZA) */}
+          <div className="flex flex-col md:flex-row gap-4 items-end md:items-center">
+            <div className="flex gap-2 bg-zinc-900/50 p-1 border border-zinc-800 self-end md:self-auto">
+              {["Todos", "Procesando", "Finalizado"].map(est => (
+                <button
+                  key={est}
+                  onClick={() => setFiltroEstado(est)}
+                  className={`px-4 py-2 text-[10px] uppercase font-bold tracking-widest transition-all ${
+                    filtroEstado === est ? 'bg-brand-blue text-white' : 'text-zinc-500 hover:text-brand-cream'
+                  }`}
+                >
+                  {est}
+                </button>
+              ))}
+            </div>
+
+            {/* BOTÓN DE LIMPIEZA MASIVA */}
+            <button 
+              onClick={limpiarFinalizados}
+              className="px-4 py-2 border border-red-900/30 text-red-500 hover:bg-red-600 hover:text-white text-[10px] uppercase font-bold tracking-widest transition-all h-fit"
             >
-                {est}
+              Limpiar Finalizados
             </button>
-            ))}
-        </div>
+          </div>
         </header>
-
       <main className="max-w-7xl mx-auto grid gap-4">
         <AnimatePresence>
           {pedidosFiltrados.map((pedido) => (
@@ -155,14 +195,23 @@ const Admin = () => {
 
               <div className="flex gap-3 w-full md:w-auto">
                 {pedido.estado !== "Finalizado" && (
-                  <button
+                    <button
                     onClick={() => finalizarPedido(pedido.id)}
                     className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-zinc-800 hover:bg-green-600 text-white px-6 py-3 text-[10px] font-bold uppercase tracking-widest transition-all"
-                  >
+                    >
                     <CheckCircle2 size={14} /> Finalizar
-                  </button>
+                    </button>
                 )}
-              </div>
+                
+                {/* Botón de Borrar Individual */}
+                <button
+                    onClick={() => borrarPedido(pedido.id)}
+                    className="flex items-center justify-center p-3 bg-zinc-900 border border-zinc-800 text-zinc-500 hover:text-red-500 hover:border-red-500/50 transition-all"
+                    title="Eliminar pedido"
+                >
+                    <Trash2 size={14} />
+                </button>
+                </div>
             </motion.div>
           ))}
         </AnimatePresence>

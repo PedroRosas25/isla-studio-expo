@@ -1,39 +1,33 @@
 @import "tailwindcss";
 
-/* 1. Importación de Fuentes (Debe ir arriba de todo) */
+/* 1. Importación directa de Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
 
-/* 2. Configuración de Marca */
 @theme {
-  /* Colores de la Landing */
+  /* Definimos las variables de fuente con el nombre exacto de Google */
+  --font-sans: "Montserrat", sans-serif;
+  --font-serif: "Playfair Display", serif;
+  
+  /* Colores de tu landing */
   --color-brand-blue: #007AFF;
   --color-brand-dark: #292A2C;
   --color-brand-cream: #F5F2EB;
-  --color-brand-grey: #B0B0B0;
-  --color-mining-dark: #0a0a0a;
-
-  /* Tipografías */
-  --font-serif: "Playfair Display", serif;
-  --font-sans: "Montserrat", sans-serif;
 }
 
-/* 3. Estilos Base */
 @layer base {
-  html {
-    scroll-behavior: auto;
+  /* Forzamos a que el navegador aplique Montserrat a TODO el sitio */
+  * {
+    font-family: var(--font-sans);
   }
 
   body {
-    /* Usamos las variables que definimos en @theme */
-    background-color: #09090b; /* Color zinc-950 aproximado */
+    background-color: #09090b; 
     color: var(--color-brand-cream);
-    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Aplicamos la Serif a todos los títulos por defecto */
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-serif);
+  /* Forzamos a que TODOS los títulos y elementos con clase .font-serif usen Playfair */
+  h1, h2, h3, h4, h5, h6, .font-serif {
+    font-family: var(--font-serif) !important;
   }
 }

@@ -7,15 +7,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        'zinc-950': '#09090b', 
         'brand-blue': '#007AFF', 
-        'brand-cream': '#F4F4F5', 
-        'mining-dark': '#18181b', 
+        'brand-dark': '#292A2C', 
+        'brand-cream': '#F5F2EB', 
+        'brand-grey': '#B0B0B0', 
+        'mining-dark': '#0a0a0a', // Mantenemos este para los fondos
       },
       fontFamily: {
-        'serif': ['Playfair Display', 'serif'], 
-        'sans': ['Inter', 'sans-serif'], 
-      },
+        // Ahora 'sans' usará Montserrat por defecto en toda la web
+        sans: ['Montserrat', 'sans-serif'],
+        // 'serif' usará Playfair Display para los títulos elegantes
+        serif: ['"Playfair Display"', 'serif'],
+      }
     },
   },
   plugins: [],

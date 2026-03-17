@@ -185,7 +185,7 @@ const Servicios = () => {
                   { id: 'foto', label: 'Cobertura Fotográfica', icon: <Camera size={20}/> },
                   { id: 'video', label: 'Producción Audiovisual', icon: <Video size={20}/> },
                   { id: 'diseño', label: 'Soporte Gráfico & Identidad', icon: <Palette size={20}/> },
-                  { id: 'web', label: 'Despliegue Web & Interactivos', icon: <Code size={20}/> },
+                  { id: 'web', label: 'Despliegue Web', icon: <Code size={20}/> },
                 ].map(item => (
                   <button
                     key={item.id}
@@ -194,9 +194,21 @@ const Servicios = () => {
                   >
                     <div className="flex items-center gap-6">
                       <div className={formData.servicios.includes(item.id) ? 'text-brand-blue' : 'text-zinc-700'}>{item.icon}</div>
-                      <span className={`font-serif text-xl ${formData.servicios.includes(item.id) ? 'text-brand-cream' : 'text-zinc-500'}`}>{item.label}</span>
+                      
+                      {/* LÓGICA PARA EL AMPERSAND APLICADA AQUÍ */}
+                      <span className={`font-serif text-xl ${formData.servicios.includes(item.id) ? 'text-brand-cream' : 'text-zinc-500'}`}>
+                        {item.label.includes("&") ? (
+                          <>
+                            {item.label.split("&")[0]} 
+                            <span className="font-sans italic text-brand-white mx-1">&</span> 
+                            {item.label.split("&")[1]}
+                          </>
+                        ) : (
+                          item.label
+                        )}
+                      </span>
                     </div>
-                    {formData.servicios.includes(item.id) && <Check size={16} className="text-brand-blue" />}
+                    {formData.servicios.includes(item.id) && <Check size={16} className="text-brand-white" />}
                   </button>
                 ))}
               </div>

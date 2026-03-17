@@ -107,7 +107,8 @@ const Hero = () => {
           <div className="bg-mining-dark/80 backdrop-blur-sm p-6 border border-zinc-800 flex flex-col justify-between h-40 hover:border-brand-blue/50 transition-colors rounded-sm group">
              <Palette className="text-brand-blue group-hover:scale-110 transition-transform" size={28} strokeWidth={1.5} />
              <span className="text-brand-cream font-bold text-base font-serif leading-tight uppercase tracking-tighter">
-               Soporte Gráfico <br/> & Identidad
+               Soporte Gráfico <br/>
+               <span className="font-sans italic mr-1">&</span> Identidad
              </span>
           </div>
 
@@ -115,8 +116,9 @@ const Hero = () => {
           <div className="bg-mining-dark/80 backdrop-blur-sm p-6 border border-zinc-800 translate-y-6 flex flex-col justify-between h-40 hover:border-brand-blue/50 transition-colors rounded-sm group">
              <Code className="text-brand-blue group-hover:scale-110 transition-transform" size={28} strokeWidth={1.5} />
              <span className="text-brand-cream font-bold text-base font-serif leading-tight uppercase tracking-tighter">
-               Despliegue Web <br/> & Interactivos
-             </span>
+              Despliegue Web <br/> 
+              <span className="font-sans italic mr-1">&</span> Interactivos
+            </span>
           </div>
         </motion.div>
       </div>

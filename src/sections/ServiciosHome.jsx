@@ -69,7 +69,20 @@ const ServiciosHome = () => {
                 <div className="mb-8 group-hover:scale-110 transition-transform duration-500 origin-left">
                   {s.icon}
                 </div>
-                <h3 className="text-2xl font-serif text-brand-cream mb-4 leading-tight">{s.title}</h3>
+                <h3 className="text-2xl font-serif text-brand-cream mb-4 leading-tight">
+                  {s.title.includes("&") ? (
+                    <>
+                      {/* Toma la parte antes del & */}
+                      {s.title.split("&")[0]} 
+                      {/* Renderiza el ampersand con Montserrat (font-sans) */}
+                      <span className="font-sans italic text-brand-white/80 mx-1">&</span> 
+                      {/* Toma la parte después del & */}
+                      {s.title.split("&")[1]}
+                    </>
+                  ) : (
+                    s.title
+                  )}
+                </h3>
                 <p className="text-zinc-500 text-sm leading-relaxed font-light">
                   {s.desc}
                 </p>

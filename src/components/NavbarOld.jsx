@@ -174,7 +174,6 @@ function NavbarOld() {
             {/* Footer del menú desplegable */}
             <div className="p-10 relative z-10 flex justify-between items-center opacity-40">
                 <span className="text-[8px] tracking-[0.5em] uppercase text-white">San Juan / ARG</span>
-                <span className="text-[8px] tracking-[0.5em] uppercase text-white">v2.06</span>
             </div>
           </motion.div>
         )}

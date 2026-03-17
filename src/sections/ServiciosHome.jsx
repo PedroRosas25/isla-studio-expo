@@ -46,7 +46,7 @@ const ServiciosHome = () => {
             <span className="text-brand-blue font-bold tracking-[0.5em] text-[10px] uppercase block mb-6">Expertise Técnico</span>
             <h2 className="text-[11vw] xs:text-[10vw] sm:text-7xl md:text-8xl font-serif leading-[0.9] tracking-tighter uppercase">
               SERVICIOS <br />
-              <span className="text-brand-blue italic block">
+              <span className="text-brand-blue not-italic block font-serif">
                 ESPECIALIZADOS
               </span>
             </h2>

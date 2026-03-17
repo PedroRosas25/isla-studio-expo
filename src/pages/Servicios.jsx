@@ -145,7 +145,7 @@ const Servicios = () => {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <h2 className="text-6xl md:text-8xl font-serif leading-[0.85] tracking-tighter mb-4 uppercase">
               Configure su <br />
-              <span className="text-brand-blue italic">Presencia.</span>
+              <span className="text-brand-blue not-italic font-serif">Presencia</span>
             </h2>
             <div className="h-[1px] w-40 bg-brand-blue/40 mt-6 mb-4"></div>
             <p className="text-zinc-500 uppercase tracking-[0.3em] text-[10px] font-bold italic">
@@ -168,7 +168,7 @@ const Servicios = () => {
                     onClick={() => setFormData({...formData, fechas: toggleOption(formData.fechas, dia)})}
                     className={`group relative p-8 transition-all duration-300 border ${formData.fechas.includes(dia) ? 'bg-brand-blue border-brand-blue' : 'bg-mining-dark/40 border-zinc-900 hover:border-zinc-700'}`}
                   >
-                    <span className={`block text-5xl font-serif font-bold italic mb-1 ${formData.fechas.includes(dia) ? 'text-white' : 'text-zinc-500'}`}>{dia}</span>
+                    <span className={`block text-5xl font-sans italic mb-1 ${formData.fechas.includes(dia) ? 'text-white' : 'text-zinc-500'}`}>{dia}</span>
                     <span className={`text-[10px] uppercase tracking-widest ${formData.fechas.includes(dia) ? 'text-blue-100' : 'text-zinc-700'}`}>Mayo 2026</span>
                   </button>
                 ))}

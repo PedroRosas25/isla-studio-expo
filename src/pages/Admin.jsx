@@ -103,7 +103,7 @@ const limpiarFinalizados = async () => {
         {/* HEADER CON TÍTULO Y FILTROS */}
         <header className="max-w-7xl mx-auto mb-16 pt-15 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
           <div className="mt-1">
-            <h2 className="text-6xl md:text-8xl font-serif uppercase tracking-tighter italic text-brand-blue leading-none">
+            <h2 className="text-6xl md:text-8xl font-serif uppercase tracking-tighter text-brand-blue leading-none">
               Master <span className="text-brand-cream not-italic">Panel</span>
             </h2>
             <div className="h-[1px] w-full bg-brand-blue/30 mt-6 mb-6"></div>

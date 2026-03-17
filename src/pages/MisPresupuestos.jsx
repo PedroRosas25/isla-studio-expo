@@ -81,7 +81,7 @@ const MisPresupuestos = () => {
       <div className="max-w-5xl mx-auto relative z-10">
         <span className="text-brand-blue font-bold tracking-[0.5em] text-[10px] uppercase block mb-4">Registro Histórico</span>
         <h1 className="text-5xl md:text-7xl font-serif text-brand-cream leading-none tracking-tighter uppercase mb-12">
-          Mis <span className="italic text-brand-blue">Servicios</span>
+          Mis <span className="italic text-brand-blue font-serif">Servicios</span>
         </h1>
 
         {presupuestos.length === 0 ? (

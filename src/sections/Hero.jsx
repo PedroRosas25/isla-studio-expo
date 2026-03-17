@@ -47,8 +47,8 @@ const Hero = () => {
 
             <h1 className="text-6xl md:text-8xl font-serif text-brand-cream leading-[0.85] mb-10 tracking-tighter">
               Soluciones de <br />
-              <span className="text-brand-blue italic pr-4">Impacto</span> <br />
-              para Stands.
+              <span className="text-brand-blue not-italic font-serif pr-4">Impacto</span> <br />
+              Para Stands.
             </h1>
             
             <p className="text-zinc-500 text-lg md:text-xl max-w-xl mb-12 leading-relaxed font-light">

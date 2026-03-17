@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Allow: /expo
+
+# Si tenés un panel de administración que no querés que aparezca en Google:
+Disallow: /admin-isla
+
+Sitemap: https://islastudio.com.ar/sitemap.xml

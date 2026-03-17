@@ -46,14 +46,16 @@ const Navbar = () => {
   const handleLogout = async () => {
     await signOut(auth);
     setIsOpen(false);
-    navigate("/");
+    // FIX: Ahora te redirige al inicio de la Expo, no a la landing vieja
+    navigate("/expo");
   };
 
   const handleScrollToServicios = (e) => {
     e.preventDefault();
     setIsOpen(false);
-    if (location.pathname !== "/") {
-      navigate("/#servicios-info");
+    // FIX: Si no estás en /expo, te lleva ahí y busca el ID
+    if (location.pathname !== "/expo") {
+      navigate("/expo#servicios-info");
     } else {
       const element = document.getElementById("servicios-info");
       if (element) {
@@ -65,15 +67,16 @@ const Navbar = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     setIsOpen(false);
+    if (location.pathname !== "/expo") navigate("/expo");
   };
 
   return (
     <nav className={`fixed w-full z-[100] transition-all duration-300 ${scrolled ? "py-4 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800" : "py-8 bg-transparent"}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         
-        {/* LOGO - Z-index 200 asegura que se vea sobre el menú */}
+        {/* LOGO - Ahora apunta a /expo */}
         <Link 
-          to="/" 
+          to="/expo" 
           onClick={scrollToTop} 
           className={`relative z-[200] flex items-center gap-3 group transition-colors duration-500 ${isOpen ? 'text-brand-cream' : ''}`}
         >
@@ -89,7 +92,7 @@ const Navbar = () => {
 
         {/* LINKS DESKTOP */}
         <div className="hidden md:flex items-center gap-10">
-          <Link to="/" onClick={scrollToTop} className="text-[10px] uppercase tracking-[0.4em] font-bold text-zinc-500 hover:text-brand-blue transition-colors">Inicio</Link>
+          <Link to="/expo" onClick={scrollToTop} className="text-[10px] uppercase tracking-[0.4em] font-bold text-zinc-500 hover:text-brand-blue transition-colors">Inicio</Link>
           <a href="#servicios-info" onClick={handleScrollToServicios} className="text-[10px] uppercase tracking-[0.4em] font-bold text-zinc-500 hover:text-brand-blue transition-colors">Servicios</a>
           
           {user && (
@@ -112,9 +115,10 @@ const Navbar = () => {
               </button>
             )}
 
-            <a href="https://pedrorosas25.github.io/isla-studio/" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-5 py-2.5 border border-zinc-800 text-zinc-400 text-[10px] uppercase tracking-[0.2em] font-bold hover:text-brand-cream hover:border-zinc-600 transition-all rounded-sm">
-              Conocé Isla <ArrowUpRight size={12} />
-            </a>
+            {/* Link a la landing de la productora (opcional) */}
+            <Link to="/" className="flex items-center gap-2 px-5 py-2.5 border border-zinc-800 text-zinc-400 text-[10px] uppercase tracking-[0.2em] font-bold hover:text-brand-cream hover:border-zinc-600 transition-all rounded-sm">
+              Productora <ArrowUpRight size={12} />
+            </Link>
 
             <Link to="/servicios" className="px-8 py-2.5 bg-brand-blue text-white text-[10px] uppercase tracking-[0.2em] font-bold rounded-sm hover:shadow-[0_0_20px_rgba(0,122,255,0.4)] transition-all">
               Presupuestar
@@ -122,7 +126,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* BOTÓN HAMBURGUESA - Z-index 200 asegura que la X se vea sobre el menú */}
         <button 
           className="md:hidden relative z-[200] text-brand-cream p-2 focus:outline-none" 
           onClick={() => setIsOpen(!isOpen)}
@@ -131,7 +134,6 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* MENÚ MOBILE FULL SCREEN */}
       <AnimatePresence>
         {isOpen && (
           <motion.div 
@@ -139,49 +141,28 @@ const Navbar = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            /* EL FIX: position fixed forzado con top-0 y h-[100dvh] */
             className="fixed inset-0 top-0 left-0 w-full h-[100dvh] z-[150] bg-zinc-950 flex flex-col justify-center items-center"
             style={{ position: 'fixed', top: 0, left: 0 }}
           >
-            <div 
-              className="absolute inset-0 opacity-[0.07] pointer-events-none" 
-              style={{ 
-                backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, 
-                backgroundSize: '45px 45px' 
-              }}
-            ></div>
+            <div className="absolute inset-0 opacity-[0.07] pointer-events-none" style={{ backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, backgroundSize: '45px 45px' }}></div>
 
             <div className="relative z-10 flex flex-col items-center gap-8 w-full pt-20">
               {[
-                { name: "Inicio", path: "/", action: scrollToTop },
+                { name: "Inicio", path: "/expo", action: scrollToTop },
                 { name: "Servicios", path: "#servicios-info", action: handleScrollToServicios },
-                { name: "Conocé Isla", path: "https://pedrorosas25.github.io/isla-studio/", external: true },
+                { name: "Ir a Productora", path: "/" },
                 user && { name: "Mis Pedidos", path: "/mis-presupuestos" },
                 !user && { name: "Iniciar Sesión", action: handleLogin, isLogin: true },
                 { name: "Presupuestar", path: "/servicios", highlight: true }
               ].filter(Boolean).map((link, i) => (
-                <motion.div
-                  key={link.name}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * i + 0.2 }}
-                  className="w-full text-center"
-                >
-                  {link.external ? (
-                    <a href={link.path} target="_blank" rel="noreferrer" className="text-5xl font-serif text-brand-cream tracking-tighter hover:text-brand-blue transition-all">
-                      {link.name}
-                    </a>
-                  ) : link.isLogin ? (
-                    <button onClick={link.action} className="text-5xl font-serif text-brand-blue italic tracking-tighter hover:text-brand-cream transition-all">
-                      {link.name}
-                    </button>
+                <motion.div key={link.name} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i + 0.2 }} className="w-full text-center">
+                  {link.isLogin ? (
+                    <button onClick={link.action} className="text-5xl font-serif text-brand-blue italic tracking-tighter hover:text-brand-cream transition-all">{link.name}</button>
                   ) : (
                     <Link 
-                      to={link.path.startsWith('#') ? "/" : link.path} 
+                      to={link.path.startsWith('#') ? "/expo" : link.path} 
                       onClick={link.path === "#servicios-info" ? handleScrollToServicios : link.action ? link.action : () => setIsOpen(false)}
-                      className={`text-5xl font-serif tracking-tighter transition-all ${
-                        link.highlight ? "text-brand-blue italic underline underline-offset-8" : "text-brand-cream hover:text-brand-blue"
-                      }`}
+                      className={`text-5xl font-serif tracking-tighter transition-all ${link.highlight ? "text-brand-blue italic underline underline-offset-8" : "text-brand-cream hover:text-brand-blue"}`}
                     >
                       {link.name}
                     </Link>
@@ -190,19 +171,12 @@ const Navbar = () => {
               ))}
 
               {user && (
-                <motion.button
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.6 }}
-                  onClick={handleLogout}
-                  className="mt-4 text-zinc-600 text-[10px] uppercase tracking-[0.5em] font-bold flex items-center gap-2"
-                >
+                <motion.button onClick={handleLogout} className="mt-4 text-zinc-600 text-[10px] uppercase tracking-[0.5em] font-bold flex items-center gap-2">
                   <LogOut size={14} /> Salir de la terminal
                 </motion.button>
               )}
             </div>
 
-            {/* Detalle inferior: pb-20 para asegurar visibilidad en iPhone/Android */}
             <div className="absolute bottom-16 flex flex-col items-center gap-2 opacity-20 pb-4">
               <div className="h-[1px] w-40 bg-brand-blue"></div>
               <span className="text-[8px] uppercase tracking-[0.8em] text-brand-cream font-bold">Isla Studio — Expo 2026</span>

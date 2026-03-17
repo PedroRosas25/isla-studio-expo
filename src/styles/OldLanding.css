@@ -1,0 +1,18 @@
+/* OldLanding.css */
+
+/* Solo mantenemos la importación de fuentes por si la Expo no usa las mismas variantes */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* IMPORTANTE: Borramos @tailwind base, components y utilities de acá.
+   Ya están en el index.css principal del proyecto de la Expo.
+*/
+
+.old-landing-wrapper {
+  /* Aquí podrías poner estilos que SOLO afecten a la landing vieja */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Si la landing vieja usaba clases específicas que NO sean de Tailwind 
+   (por ejemplo .clase-custom { color: red; }), esas sí van acá. 
+*/

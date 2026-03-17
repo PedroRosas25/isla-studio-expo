@@ -6,7 +6,7 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen bg-zinc-950 flex flex-col justify-center overflow-hidden pt-20 md:pt-0">
       
-      {/* 1. Logo de la Expo - Versión Desktop (Sigue igual) */}
+      {/* 1. Logo de la Expo - Versión Desktop */}
       <motion.div 
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -29,8 +29,6 @@ const Hero = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 z-10 w-full relative">
-        
-        {/* Contenedor del Texto */}
         <div className="max-w-4xl">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -56,14 +54,14 @@ const Hero = () => {
             </p>
             
             <div className="flex flex-wrap gap-8 mb-16 md:mb-0">
+              {/* BOTÓN: Mantenemos /servicios porque es la página técnica común */}
               <Link to="/servicios" className="px-12 py-5 bg-brand-blue text-white font-bold flex items-center gap-3 hover:bg-blue-600 transition-all group uppercase text-[10px] tracking-[0.2em] rounded-sm text-center">
                 Ver Catálogo de Servicios
                 <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </Link>
-              
             </div>
 
-            {/* Nuevo Bloque: Logo de la Expo - Versión Mobile (Visible solo en celular) */}
+            {/* Logo de la Expo - Versión Mobile */}
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -123,7 +121,6 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      {/* Indicador de scroll lateral */}
       <div className="absolute right-12 bottom-12 hidden lg:block">
         <div className="flex flex-col items-center gap-6">
           <span className="text-[9px] text-zinc-700 uppercase tracking-[0.6em] rotate-90 mb-12">Explorar</span>

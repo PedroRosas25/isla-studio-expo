@@ -42,7 +42,7 @@ function ContactoOld() {
         >
           <span className="text-brand-blue font-bold tracking-[0.4em] text-[10px] uppercase mb-4 block italic">Next Step</span>
           <h2 className="text-5xl md:text-7xl font-serif tracking-tighter mb-8 text-white">
-            Impulsá tu <span className="italic text-brand-blue">Presencia</span>
+            Impulsá tu <span className="not-italic font-serif text-brand-blue">Presencia</span>
           </h2>
           <p className="text-xl text-zinc-500 mb-16 max-w-2xl mx-auto font-light leading-relaxed">
             ¿Listo para llevar tu marca al siguiente nivel? Escribinos para coordinar una reunión y armar una propuesta técnica a tu medida.

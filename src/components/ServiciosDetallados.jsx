@@ -30,7 +30,7 @@ function ServiciosDetallados() {
         >
           <span className="text-brand-blue font-bold tracking-[0.4em] text-[10px] uppercase mb-4 block italic">Soluciones Integrales</span>
           <h2 className="text-5xl md:text-7xl font-serif tracking-tighter mb-8 text-brand-cream">
-            Nuestros <span className="italic text-brand-blue">Servicios</span>
+            Nuestros <span className="not-italic font-serif text-brand-blue">Servicios</span>
           </h2>
           <div className="h-[1px] w-24 bg-brand-blue/40"></div>
         </motion.div>

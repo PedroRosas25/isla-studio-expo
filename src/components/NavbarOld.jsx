@@ -9,10 +9,28 @@ function NavbarOld() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Bloqueo de scroll cuando el menú mobile está abierto
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "unset";
   }, [isOpen]);
 
+  // Función para volver al inicio con scroll suave
+  const scrollToTop = (e) => {
+    e.preventDefault();
+    setIsOpen(false);
+    
+    if (location.pathname === "/") {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    } else {
+      navigate("/");
+      // En navegación entre páginas, el navegador suele resetear al top automáticamente
+    }
+  };
+
+  // Función para navegación interna y entre páginas
   const handleNavClick = (e, targetId) => {
     e.preventDefault();
     setIsOpen(false);
@@ -39,15 +57,21 @@ function NavbarOld() {
       >
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           
-          {/* LOGO SECCIÓN - AJUSTADO SEGÚN TU PEDIDO */}
-          <Link to="/" className="flex items-center gap-3 group" onClick={() => { setIsOpen(false); window.scrollTo(0,0); }}>
-            <img src={logo} alt="Isla Studio" className="h-10 w-auto filter grayscale brightness-200 transition-all group-hover:scale-105" />
+          {/* LOGO SECCIÓN - DISEÑO DUAL Y SCROLL SUAVE */}
+          <Link to="/" className="flex items-center gap-3 group" onClick={scrollToTop}>
+            <img 
+              src={logo} 
+              alt="Isla Studio" 
+              className="h-10 w-auto filter grayscale brightness-200 transition-all group-hover:scale-105" 
+            />
             <div className="flex flex-col">
               <span className="font-serif text-xl tracking-tighter leading-none">
                 <span className="text-white">ISLA</span>
                 <span className="text-brand-blue font-bold italic ml-1.5">STUDIO</span>
               </span>
-              <span className="text-[8px] uppercase tracking-[0.4em] text-zinc-500 font-bold hidden sm:block">Creative Agency</span>
+              <span className="text-[8px] uppercase tracking-[0.4em] text-zinc-500 font-bold hidden sm:block">
+                Creative Agency
+              </span>
             </div>
           </Link>
 
@@ -64,11 +88,15 @@ function NavbarOld() {
                 <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-brand-blue transition-all group-hover:w-full"></span>
               </a>
             ))}
-            <Link to="/expo" className="text-[9px] font-bold tracking-[0.2em] border border-brand-blue/30 px-4 py-2 rounded-sm text-brand-blue hover:bg-brand-blue hover:text-white transition-all">
+            <Link 
+              to="/expo" 
+              className="text-[9px] font-bold tracking-[0.2em] border border-brand-blue/30 px-4 py-2 rounded-sm text-brand-blue hover:bg-brand-blue hover:text-white transition-all"
+            >
               PROYECTO EXPO 2026
             </Link>
           </div>
 
+          {/* BOTÓN CONTACTO */}
           <a 
             href="#contacto" 
             onClick={(e) => handleNavClick(e, 'contacto')}
@@ -78,6 +106,7 @@ function NavbarOld() {
             <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
           </a>
 
+          {/* BURGER MENU */}
           <button 
             className="md:hidden text-brand-cream p-2"
             onClick={() => setIsOpen(!isOpen)}
@@ -87,7 +116,7 @@ function NavbarOld() {
         </div>
       </motion.nav>
 
-      {/* MENU MOBILE - AJUSTADO CON TUS PREFERENCIAS */}
+      {/* MENU MOBILE DESPLEGABLE */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -96,10 +125,13 @@ function NavbarOld() {
             exit={{ opacity: 0 }}
             className="md:hidden fixed inset-0 z-[999] bg-zinc-950 flex flex-col"
           >
-            <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-                 style={{ backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, backgroundSize: '40px 40px' }}>
-            </div>
+            {/* Grilla de fondo */}
+            <div 
+              className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+              style={{ backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, backgroundSize: '40px 40px' }}
+            ></div>
 
+            {/* Header del menú desplegable */}
             <div className="flex items-center justify-between px-6 h-20 shrink-0 border-b border-white/5 relative z-10">
               <div className="flex flex-col">
                 <span className="font-serif text-xl tracking-tighter leading-none">
@@ -112,6 +144,7 @@ function NavbarOld() {
               </button>
             </div>
 
+            {/* Links del menú desplegable */}
             <div className="flex flex-col justify-center flex-grow px-10 gap-10 relative z-10">
               {['valores', 'servicios', 'planes', 'equipo', 'contacto'].map((item, index) => (
                 <motion.div
@@ -138,8 +171,10 @@ function NavbarOld() {
               </Link>
             </div>
 
+            {/* Footer del menú desplegable */}
             <div className="p-10 relative z-10 flex justify-between items-center opacity-40">
-                <span className="text-[8px] tracking-[0.5em] uppercase">San Juan / ARG</span>
+                <span className="text-[8px] tracking-[0.5em] uppercase text-white">San Juan / ARG</span>
+                <span className="text-[8px] tracking-[0.5em] uppercase text-white">v2.06</span>
             </div>
           </motion.div>
         )}

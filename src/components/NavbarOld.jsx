@@ -39,16 +39,19 @@ function NavbarOld() {
       >
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           
-          {/* LOGO SECCIÓN */}
+          {/* LOGO SECCIÓN - AJUSTADO SEGÚN TU PEDIDO */}
           <Link to="/" className="flex items-center gap-3 group" onClick={() => { setIsOpen(false); window.scrollTo(0,0); }}>
             <img src={logo} alt="Isla Studio" className="h-10 w-auto filter grayscale brightness-200 transition-all group-hover:scale-105" />
             <div className="flex flex-col">
-              <span className="text-white font-serif text-xl tracking-tighter leading-none">ISLA <span className="italic text-brand-blue">STUDIO</span></span>
+              <span className="font-serif text-xl tracking-tighter leading-none">
+                <span className="text-white">ISLA</span>
+                <span className="text-brand-blue font-bold italic ml-1.5">STUDIO</span>
+              </span>
               <span className="text-[8px] uppercase tracking-[0.4em] text-zinc-500 font-bold hidden sm:block">Creative Agency</span>
             </div>
           </Link>
 
-          {/* MENÚ DESKTOP REFINADO */}
+          {/* MENÚ DESKTOP */}
           <div className="hidden md:flex items-center gap-10">
             {['valores', 'servicios', 'planes', 'equipo'].map((item) => (
               <a 
@@ -57,18 +60,15 @@ function NavbarOld() {
                 onClick={(e) => handleNavClick(e, item)} 
                 className="text-[10px] font-bold text-zinc-400 uppercase tracking-[0.3em] hover:text-brand-blue transition-all cursor-pointer relative group"
               >
-                {item === 'valores' ? 'Esencia' : item}
+                {item === 'valores' ? 'Filosofía' : item}
                 <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-brand-blue transition-all group-hover:w-full"></span>
               </a>
             ))}
-            
-            {/* LINK A EXPO (Destacado técnico) */}
             <Link to="/expo" className="text-[9px] font-bold tracking-[0.2em] border border-brand-blue/30 px-4 py-2 rounded-sm text-brand-blue hover:bg-brand-blue hover:text-white transition-all">
               PROYECTO EXPO 2026
             </Link>
           </div>
 
-          {/* BOTÓN CTA ESTILO INDUSTRIAL */}
           <a 
             href="#contacto" 
             onClick={(e) => handleNavClick(e, 'contacto')}
@@ -87,7 +87,7 @@ function NavbarOld() {
         </div>
       </motion.nav>
 
-      {/* MENU MOBILE REIMAGINADO */}
+      {/* MENU MOBILE - AJUSTADO CON TUS PREFERENCIAS */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -96,19 +96,23 @@ function NavbarOld() {
             exit={{ opacity: 0 }}
             className="md:hidden fixed inset-0 z-[999] bg-zinc-950 flex flex-col"
           >
-            {/* Decoración de fondo */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
                  style={{ backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, backgroundSize: '40px 40px' }}>
             </div>
 
             <div className="flex items-center justify-between px-6 h-20 shrink-0 border-b border-white/5 relative z-10">
-              <span className="text-white font-serif text-xl not-italic tracking-tighter">ISLA </span> <span className="text-brand-blue font-bold text-xl italic tracking-tighter">STUDIO</span>
+              <div className="flex flex-col">
+                <span className="font-serif text-xl tracking-tighter leading-none">
+                  <span className="text-white">ISLA</span>
+                  <span className="text-brand-blue font-bold italic ml-1.5">STUDIO</span>
+                </span>
+              </div>
               <button onClick={() => setIsOpen(false)} className="text-white p-2">
                 <X size={32} strokeWidth={1} />
               </button>
             </div>
 
-            <div className="flex flex-col justify-center flex-grow px-10 gap-8 relative z-10">
+            <div className="flex flex-col justify-center flex-grow px-10 gap-10 relative z-10">
               {['valores', 'servicios', 'planes', 'equipo', 'contacto'].map((item, index) => (
                 <motion.div
                   key={item}
@@ -118,13 +122,9 @@ function NavbarOld() {
                 >
                   <a 
                     onClick={(e) => handleNavClick(e, item)}
-                    className="text-4xl font-serif text-brand-cream italic hover:text-brand-blue transition-colors block"
+                    className="text-4xl font-serif text-white cursor-pointer hover:text-brand-blue transition-colors block"
                   >
-                    {item === 'valores' ? 'Filosofía' : item}
-                    {item === 'servicios' ? 'Servicios' : item}
-                    {item === 'planes' ? 'Planes' : item}
-                    {item === 'equipo' ? 'Equipo' : item}
-                    {item === 'contacto' ? 'Contacto' : item}
+                    {item === 'valores' ? 'Filosofía' : item.charAt(0).toUpperCase() + item.slice(1)}
                   </a>
                 </motion.div>
               ))}

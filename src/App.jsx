@@ -65,9 +65,9 @@ function App() {
             <Route path="/mis-presupuestos" element={<><Navbar /><MisPresupuestos /><Footer /></>} />
             <Route path="/admin-isla" element={<><Navbar /><Admin /><Footer /></>} />
             
-            <Route path="/privacidad" element={<><Navbar /><Privacidad /><Footer /></>} />
-            <Route path="/cookies" element={<><Navbar /><Cookies /><Footer /></>} />
-            <Route path="/aviso-legal" element={<><Navbar /><AvisoLegal /><Footer /></>} />
+            <Route path="/privacidad" element={<><Privacidad /><Footer /></>} />
+            <Route path="/cookies" element={<><Cookies /><Footer /></>} />
+            <Route path="/aviso-legal" element={<><AvisoLegal /><Footer /></>} />
           </Routes>
         </main>
       </div>

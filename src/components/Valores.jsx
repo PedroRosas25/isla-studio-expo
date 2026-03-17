@@ -4,17 +4,17 @@ import { memo } from "react";
 
 const valores = [
   {
-    icono: <Target size={32} className="text-brand-cream transition-colors duration-500" />,
+    icono: <Target size={28} strokeWidth={1.5} />,
     titulo: "Orientados a Resultados",
     descripcion: "Acompañamos a marcas y empresas en su presencia digital mediante estrategias de contenido creativas y profesionales, siempre adaptadas a los objetivos de cada cliente."
   },
   {
-    icono: <Cpu size={32} className="text-brand-cream transition-colors duration-500" />,
+    icono: <Cpu size={28} strokeWidth={1.5} />,
     titulo: "Innovación & Tecnología",
     descripcion: "Nuestro enfoque se basa en el uso de herramientas tecnológicas avanzadas, incluyendo Inteligencia Artificial, para optimizar la calidad y el impacto de lo que producimos."
   },
   {
-    icono: <Zap size={32} className="text-brand-cream transition-colors duration-500" />,
+    icono: <Zap size={28} strokeWidth={1.5} />,
     titulo: "Planificación Estratégica",
     descripcion: "No publicamos por publicar. Garantizamos coherencia estética, narrativa visual y un seguimiento de métricas reales para asegurar el crecimiento."
   }
@@ -22,50 +22,67 @@ const valores = [
 
 function Valores() {
   return (
-    <section id="valores" className="py-24 bg-zinc-950 border-t border-zinc-900 text-brand-cream px-4 relative overflow-hidden">
+    <section id="valores" className="py-32 bg-zinc-950 border-t border-zinc-900 text-brand-cream px-6 relative overflow-hidden">
       
-      {/* Fondo optimizado: desenfoque solo si el dispositivo lo soporta bien */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-blue/5 rounded-full blur-[120px] pointer-events-none"></div>
+      {/* Grilla técnica de fondo (sutil) */}
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none" 
+           style={{ backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, backgroundSize: '40px 40px' }}>
+      </div>
 
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-20"
         >
-          <h2 className="text-4xl md:text-5xl font-black mb-6">Nuestra Filosofía</h2>
-          <p className="text-xl text-brand-cream max-w-3xl mx-auto">
-            Somos una agencia especializada en comunicación, marketing digital y producción audiovisual.
+          <span className="text-brand-blue font-bold tracking-[0.4em] text-[10px] uppercase mb-4 block">Filosofía de Trabajo</span>
+          <h2 className="text-5xl md:text-6xl font-serif tracking-tighter mb-8">Nuestra <span className="not-italic font-serif text-brand-blue">Esencia</span></h2>
+          <p className="text-xl text-zinc-500 max-w-2xl font-light leading-relaxed">
+            Somos una agencia especializada en comunicación, marketing digital y producción audiovisual de alto impacto.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {valores.map((valor, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              // Optimizamos: quitamos el backdrop-blur-sm en móvil para mayor rendimiento al hacer scroll
-              className="group relative p-8 bg-zinc-900/50 md:backdrop-blur-sm rounded-2xl border border-brand-blue/30 md:border-zinc-800 hover:border-brand-blue/50 transition-all duration-300 hover:-translate-y-2 shadow-[0_5px_20px_rgba(0,122,255,0.1)] md:shadow-none hover:shadow-[0_10px_40px_rgba(0,122,255,0.15)] overflow-hidden will-change-transform"
+              className="group relative p-10 bg-mining-dark/20 border border-zinc-900 hover:border-brand-blue/40 transition-all duration-500 rounded-sm"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/5 to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              {/* Overlay de gradiente sutil al hacer hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
               <div className="relative z-10">
-                <div className="bg-zinc-800 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 border border-brand-blue/30 md:border-transparent group-hover:border-transparent group-hover:bg-brand-blue group-hover:scale-110 transition-all duration-300 shadow-[0_0_15px_rgba(0,122,255,0.15)] md:shadow-none group-hover:shadow-[0_0_20px_rgba(0,122,255,0.4)]">
+                <div className="text-brand-blue mb-8 group-hover:scale-110 transition-transform duration-500 origin-left">
                   {valor.icono}
                 </div>
                 
-                <h3 className="text-2xl font-bold mb-4 text-gray-200 group-hover:text-brand-cream transition-colors duration-300">
-                  {valor.titulo}
+                <h3 className="text-2xl font-serif mb-6 text-brand-cream">
+                  {/* Lógica para el ampersand en el título */}
+                  {valor.titulo.includes("&") ? (
+                    <>
+                      {valor.titulo.split("&")[0]} 
+                      <span className="font-sans italic text-brand-white mx-1">&</span> 
+                      {valor.titulo.split("&")[1]}
+                    </>
+                  ) : (
+                    valor.titulo
+                  )}
                 </h3>
                 
-                <p className="text-brand-cream leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
+                <p className="text-zinc-500 text-sm leading-relaxed group-hover:text-zinc-400 transition-colors duration-500">
                   {valor.descripcion}
                 </p>
+              </div>
+
+              {/* Detalle técnico en la esquina */}
+              <div className="absolute top-4 right-4 text-[10px] font-mono text-zinc-800 group-hover:text-brand-blue/30 transition-colors">
+                0{index + 1}
               </div>
             </motion.div>
           ))}

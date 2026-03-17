@@ -102,7 +102,7 @@ function NavbarOld() {
             </div>
 
             <div className="flex items-center justify-between px-6 h-20 shrink-0 border-b border-white/5 relative z-10">
-              <span className="text-white font-serif text-xl italic tracking-tighter">ISLA STUDIO</span>
+              <span className="text-white font-serif text-xl not-italic tracking-tighter">ISLA </span> <span className="text-brand-blue font-bold text-xl italic tracking-tighter">STUDIO</span>
               <button onClick={() => setIsOpen(false)} className="text-white p-2">
                 <X size={32} strokeWidth={1} />
               </button>
@@ -120,7 +120,11 @@ function NavbarOld() {
                     onClick={(e) => handleNavClick(e, item)}
                     className="text-4xl font-serif text-brand-cream italic hover:text-brand-blue transition-colors block"
                   >
-                    {item === 'valores' ? 'La Esencia' : item}
+                    {item === 'valores' ? 'Filosofía' : item}
+                    {item === 'servicios' ? 'Servicios' : item}
+                    {item === 'planes' ? 'Planes' : item}
+                    {item === 'equipo' ? 'Equipo' : item}
+                    {item === 'contacto' ? 'Contacto' : item}
                   </a>
                 </motion.div>
               ))}
@@ -136,7 +140,6 @@ function NavbarOld() {
 
             <div className="p-10 relative z-10 flex justify-between items-center opacity-40">
                 <span className="text-[8px] tracking-[0.5em] uppercase">San Juan / ARG</span>
-                <span className="text-[8px] tracking-[0.5em] uppercase">v2.06</span>
             </div>
           </motion.div>
         )}

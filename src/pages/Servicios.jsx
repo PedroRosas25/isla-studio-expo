@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Check, Camera, Video, Palette, Code, Mail, LogOut, Phone, ArrowUpRight, Building2 } from "lucide-react";
-import { FcGoogle } from "react-icons/fc"; 
+import { Check, Camera, Video, Palette, Code, Mail, LogOut, Phone, ArrowUpRight, Building2, MessageCircle } from "lucide-react";
+import { FcGoogle } from "react-icons/fc";
+import { FaWhatsapp } from "react-icons/fa";
 import emailjs from '@emailjs/browser';
 
 // Importamos la configuración de Firebase
@@ -185,7 +186,12 @@ const Servicios = () => {
                   { id: 'foto', label: 'Cobertura Fotográfica', icon: <Camera size={20}/> },
                   { id: 'video', label: 'Producción Audiovisual', icon: <Video size={20}/> },
                   { id: 'diseño', label: 'Soporte Gráfico & Identidad', icon: <Palette size={20}/> },
-                  { id: 'web', label: 'Despliegue Web', icon: <Code size={20}/> },
+                  { 
+                    id: 'web', 
+                    label: 'Despliegue Web', 
+                    icon: <Code size={20}/>,
+                    hasWhatsApp: true 
+                  },
                 ].map(item => (
                   <button
                     key={item.id}
@@ -197,26 +203,39 @@ const Servicios = () => {
                     }`}
                   >
                     <div className="flex items-center gap-6">
-                      {/* Icono: Azul si está seleccionado, blanco si no */}
                       <div className={formData.servicios.includes(item.id) ? 'text-brand-blue' : 'text-brand-white'}>
                         {item.icon}
                       </div>
                       
-                      {/* Texto: Siempre text-brand-cream (Blanco) */}
-                      <span className="font-serif text-xl text-brand-cream text-left">
-                        {item.label.includes("&") ? (
-                          <>
-                            {item.label.split("&")[0]} 
-                            <span className="font-sans italic mx-1">&</span> 
-                            {item.label.split("&")[1]}
-                          </>
-                        ) : (
-                          item.label
+                      <div className="flex flex-col md:flex-row md:items-center gap-4">
+                        <span className="font-serif text-xl text-brand-cream text-left">
+                          {item.label.includes("&") ? (
+                            <>
+                              {item.label.split("&")[0]} 
+                              <span className="font-sans italic mx-1">&</span> 
+                              {item.label.split("&")[1]}
+                            </>
+                          ) : (
+                            item.label
+                          )}
+                        </span>
+
+                        {/* BOTÓN WHATSAPP CON react-icons */}
+                        {item.hasWhatsApp && (
+                          <a 
+                            href="https://wa.me/542645624688?text=Hola! Me gustaría consultar el precio por el servicio de Despliegue Web."
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="w-fit px-3 py-1 bg-green-600/20 border border-green-500/50 text-green-400 text-[10px] uppercase tracking-widest font-bold rounded-full hover:bg-green-600 hover:text-white transition-all flex items-center gap-2 group/wa"
+                          >
+                            <FaWhatsapp size={14} className="text-green-500 group-hover/wa:text-white transition-colors" />
+                            Consultar Precio
+                          </a>
                         )}
-                      </span>
+                      </div>
                     </div>
 
-                    {/* Checkmark que aparece al seleccionar */}
                     <div className={`transition-opacity duration-300 ${formData.servicios.includes(item.id) ? 'opacity-100' : 'opacity-0'}`}>
                       <Check size={18} className="text-brand-blue" />
                     </div>

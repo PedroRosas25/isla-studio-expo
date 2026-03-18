@@ -158,7 +158,7 @@ const Servicios = () => {
           <div className="space-y-20">
             {/* 01. FECHAS */}
             <section>
-              <h3 className="text-xs font-bold tracking-[0.4em] text-zinc-600 uppercase mb-8 flex items-center gap-4 font-serif">
+              <h3 className="text-xs font-bold tracking-[0.4em] text-brand-white uppercase mb-8 flex items-center gap-4 font-serif">
                 <span className="text-brand-blue italic">01</span> Seleccione Jornadas
               </h3>
               <div className="grid grid-cols-3 gap-1">
@@ -168,8 +168,8 @@ const Servicios = () => {
                     onClick={() => setFormData({...formData, fechas: toggleOption(formData.fechas, dia)})}
                     className={`group relative p-8 transition-all duration-300 border ${formData.fechas.includes(dia) ? 'bg-brand-blue border-brand-blue' : 'bg-mining-dark/40 border-zinc-900 hover:border-zinc-700'}`}
                   >
-                    <span className={`block text-5xl font-sans italic mb-1 ${formData.fechas.includes(dia) ? 'text-white' : 'text-zinc-500'}`}>{dia}</span>
-                    <span className={`text-[10px] uppercase tracking-widest ${formData.fechas.includes(dia) ? 'text-blue-100' : 'text-zinc-700'}`}>Mayo 2026</span>
+                    <span className={`block text-5xl font-sans italic mb-1 ${formData.fechas.includes(dia) ? 'text-white' : 'text-brand-white'}`}>{dia}</span>
+                    <span className={`text-[10px] uppercase tracking-widest ${formData.fechas.includes(dia) ? 'text-blue-100' : 'text-brand-white'}`}>Mayo 2026</span>
                   </button>
                 ))}
               </div>
@@ -177,7 +177,7 @@ const Servicios = () => {
 
             {/* 02. SERVICIOS */}
             <section>
-              <h3 className="text-xs font-bold tracking-[0.4em] text-zinc-600 uppercase mb-8 flex items-center gap-4 font-serif">
+              <h3 className="text-xs font-bold tracking-[0.4em] text-brand-white uppercase mb-8 flex items-center gap-4 font-serif">
                 <span className="text-brand-blue italic">02</span> Categoría Técnica
               </h3>
               <div className="grid md:grid-cols-1 gap-2">
@@ -190,17 +190,24 @@ const Servicios = () => {
                   <button
                     key={item.id}
                     onClick={() => setFormData({...formData, servicios: toggleOption(formData.servicios, item.id)})}
-                    className={`flex items-center justify-between p-6 border transition-all ${formData.servicios.includes(item.id) ? 'border-brand-blue bg-brand-blue/5' : 'border-zinc-900 bg-mining-dark/20 hover:border-zinc-700'}`}
+                    className={`flex items-center justify-between p-6 border transition-all duration-300 ${
+                      formData.servicios.includes(item.id) 
+                        ? 'border-brand-blue bg-brand-blue/10' 
+                        : 'border-zinc-900 bg-mining-dark/20 hover:border-zinc-700'
+                    }`}
                   >
                     <div className="flex items-center gap-6">
-                      <div className={formData.servicios.includes(item.id) ? 'text-brand-blue' : 'text-zinc-700'}>{item.icon}</div>
+                      {/* Icono: Azul si está seleccionado, blanco si no */}
+                      <div className={formData.servicios.includes(item.id) ? 'text-brand-blue' : 'text-brand-white'}>
+                        {item.icon}
+                      </div>
                       
-                      {/* LÓGICA PARA EL AMPERSAND APLICADA AQUÍ */}
-                      <span className={`font-serif text-xl ${formData.servicios.includes(item.id) ? 'text-brand-cream' : 'text-zinc-500'}`}>
+                      {/* Texto: Siempre text-brand-cream (Blanco) */}
+                      <span className="font-serif text-xl text-brand-cream text-left">
                         {item.label.includes("&") ? (
                           <>
                             {item.label.split("&")[0]} 
-                            <span className="font-sans italic text-brand-white mx-1">&</span> 
+                            <span className="font-sans italic mx-1">&</span> 
                             {item.label.split("&")[1]}
                           </>
                         ) : (
@@ -208,7 +215,11 @@ const Servicios = () => {
                         )}
                       </span>
                     </div>
-                    {formData.servicios.includes(item.id) && <Check size={16} className="text-brand-white" />}
+
+                    {/* Checkmark que aparece al seleccionar */}
+                    <div className={`transition-opacity duration-300 ${formData.servicios.includes(item.id) ? 'opacity-100' : 'opacity-0'}`}>
+                      <Check size={18} className="text-brand-blue" />
+                    </div>
                   </button>
                 ))}
               </div>
@@ -218,7 +229,7 @@ const Servicios = () => {
             <AnimatePresence>
               {formData.servicios.includes('video') && (
                 <motion.section initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                  <h3 className="text-xs font-bold tracking-[0.4em] text-zinc-600 uppercase mb-8 flex items-center gap-4 font-serif">
+                  <h3 className="text-xs font-bold tracking-[0.4em] text-brand-white uppercase mb-8 flex items-center gap-4 font-serif">
                     <span className="text-brand-blue italic">03</span> Post-Producción
                   </h3>
                   <div className="grid grid-cols-2 gap-2">
@@ -226,7 +237,7 @@ const Servicios = () => {
                       <button
                         key={nivel}
                         onClick={() => setFormData({...formData, nivelEdicion: nivel})}
-                        className={`py-4 px-4 border text-[10px] uppercase font-bold tracking-widest transition-all ${formData.nivelEdicion === nivel ? 'bg-brand-blue text-white border-brand-blue' : 'border-zinc-900 text-zinc-600 hover:border-zinc-700'}`}
+                        className={`py-4 px-4 border text-[10px] uppercase font-bold tracking-widest transition-all ${formData.nivelEdicion === nivel ? 'bg-brand-blue text-white border-brand-blue' : 'border-zinc-900 text-brand-white hover:border-zinc-700'}`}
                       >
                         {nivel}
                       </button>
@@ -243,14 +254,14 @@ const Servicios = () => {
               
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <span className="text-zinc-500 text-[10px] uppercase tracking-widest block font-bold">Jornadas:</span>
-                  <div className="text-brand-cream font-serif text-sm italic tracking-wide">
+                  <span className="text-brand-white text-[10px] uppercase tracking-widest block font-bold">Jornadas:</span>
+                  <div className="text-brand-white font-serif text-sm italic tracking-wide">
                     {formData.fechas.length > 0 ? formData.fechas.sort().map(d => `${d} de Mayo`).join(', ') : '---'}
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-zinc-500 text-[10px] uppercase tracking-widest block font-bold">Servicios:</span>
+                  <span className="text-brand-white text-[10px] uppercase tracking-widest block font-bold">Servicios:</span>
                   <div className="flex flex-col gap-2">
                     {formData.servicios.length > 0 ? (
                       formData.servicios.map(id => (
@@ -260,7 +271,7 @@ const Servicios = () => {
                         </div>
                       ))
                     ) : (
-                      <span className="text-zinc-700 font-serif text-sm italic">Ninguno seleccionado</span>
+                      <span className="text-brand-white font-serif text-sm italic">Ninguno seleccionado</span>
                     )}
                   </div>
                 </div>
@@ -286,7 +297,7 @@ const Servicios = () => {
                         placeholder="NOMBRE DE EMPRESA / STAND"
                         value={formData.empresa}
                         onChange={(e) => setFormData({...formData, empresa: e.target.value.toUpperCase()})}
-                        className="w-full bg-zinc-950 border border-zinc-800 py-4 pl-12 pr-4 text-[10px] font-bold tracking-widest text-brand-cream focus:border-brand-blue outline-none transition-colors"
+                        className="w-full bg-zinc-950 border border-zinc-800 py-4 pl-12 pr-4 text-[10px] font-bold tracking-widest text-brand-white focus:border-brand-blue outline-none transition-colors"
                       />
                     </div>
 
@@ -297,7 +308,7 @@ const Servicios = () => {
                         placeholder="CELULAR DE CONTACTO"
                         value={formData.celular}
                         onChange={(e) => setFormData({...formData, celular: e.target.value})}
-                        className="w-full bg-zinc-950 border border-zinc-800 py-4 pl-12 pr-4 text-[10px] font-bold tracking-widest text-brand-cream focus:border-brand-blue outline-none transition-colors"
+                        className="w-full bg-zinc-950 border border-zinc-800 py-4 pl-12 pr-4 text-[10px] font-bold tracking-widest text-brand-white focus:border-brand-blue outline-none transition-colors"
                       />
                     </div>
 

@@ -15,6 +15,11 @@
 }
 
 @layer base {
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   /* Forzamos a que el navegador aplique Montserrat a TODO el sitio */
   * {
     font-family: var(--font-sans);

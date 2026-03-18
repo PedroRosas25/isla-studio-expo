@@ -105,7 +105,7 @@ function HeroOld() {
           </div>
         </motion.div>
 
-        {/* BOTÓN ESTILO EXPO */}
+        {/* BOTÓN ESTILO EXPO CON SCROLL SUAVE */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -113,7 +113,14 @@ function HeroOld() {
         >
           <a 
             href="#valores" 
-            className="px-10 py-4 bg-brand-blue text-white text-[11px] font-bold uppercase tracking-[0.3em] rounded-sm hover:bg-blue-600 transition-all flex items-center gap-4 group"
+            onClick={(e) => {
+              e.preventDefault(); // Evita el salto brusco
+              const element = document.getElementById('valores');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="px-10 py-4 bg-brand-blue text-white text-[11px] font-bold uppercase tracking-[0.3em] rounded-sm hover:bg-blue-600 transition-all flex items-center gap-4 group w-fit"
           >
             Descubrir Isla
             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />

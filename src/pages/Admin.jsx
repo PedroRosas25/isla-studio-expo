@@ -107,7 +107,7 @@ const limpiarFinalizados = async () => {
               Master <span className="text-brand-cream not-italic font-serif">Panel</span>
             </h2>
             <div className="h-[1px] w-full bg-brand-blue/30 mt-6 mb-6"></div>
-            <p className="text-zinc-500 text-[10px] uppercase tracking-[0.4em] font-bold">
+            <p className="text-brand-cream text-[10px] uppercase tracking-[0.4em] font-bold">
               Gestión de Presupuestos — Expo Minera 2026
             </p>
           </div>
@@ -158,7 +158,7 @@ const limpiarFinalizados = async () => {
 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-8 flex-1">
                   <div>
-                    <span className="text-zinc-600 text-[9px] uppercase font-bold block mb-1">Contacto</span>
+                    <span className="text-brand-cream text-[9px] uppercase font-bold block mb-1">Contacto</span>
                     <p className="text-xs font-medium">{pedido.userName}</p>
                     <a href={`https://wa.me/${pedido.celular}`} target="_blank" className="text-brand-blue text-[10px] flex items-center gap-1 mt-1 hover:underline">
                       <Phone size={10} /> {pedido.celular}
@@ -166,9 +166,9 @@ const limpiarFinalizados = async () => {
                   </div>
 
                   <div>
-                    <span className="text-zinc-600 text-[9px] uppercase font-bold block mb-1">Servicios</span>
+                    <span className="text-brand-cream text-[9px] uppercase font-bold block mb-1">Servicios</span>
                     <div className="flex flex-col gap-1">
-                        <p className="text-[10px] text-zinc-400 italic leading-tight">
+                        <p className="text-[10px] text-brand-cream italic leading-tight">
                         {pedido.servicios?.join(", ")}
                         </p>
                         
@@ -185,7 +185,7 @@ const limpiarFinalizados = async () => {
                     </div>
 
                   <div className="hidden md:block">
-                    <span className="text-zinc-600 text-[9px] uppercase font-bold block mb-1">Estado</span>
+                    <span className="text-brand-cream text-[9px] uppercase font-bold block mb-1">Estado</span>
                     <span className={`text-[10px] px-2 py-1 rounded-sm font-bold ${pedido.estado === 'Finalizado' ? 'bg-green-500/10 text-green-500' : 'bg-brand-blue/10 text-brand-blue'}`}>
                       {pedido.estado}
                     </span>

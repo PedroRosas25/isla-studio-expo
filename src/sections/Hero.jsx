@@ -6,12 +6,13 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen bg-zinc-950 flex flex-col justify-center overflow-hidden pt-20 md:pt-0">
       
-      {/* 1. Logo de la Expo - Versión Desktop */}
+      {/* 1. Logo de la Expo - Versión Desktop (SOLO PANTALLAS GIGANTES) */}
       <motion.div 
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1, delay: 0.6 }}
-        className="absolute top-32 right-6 md:right-12 z-20 hidden md:block"
+        // CAMBIO ACÁ: de md:block a 2xl:block
+        className="absolute top-32 right-6 md:right-12 z-20 hidden 2xl:block"
       >
         <div className="relative group">
           <div className="absolute inset-0 bg-brand-blue/10 blur-3xl rounded-full group-hover:bg-brand-blue/20 transition-colors duration-500"></div>
@@ -54,25 +55,27 @@ const Hero = () => {
             </p>
             
             <div className="flex flex-wrap gap-8 mb-16 md:mb-0">
-              {/* BOTÓN: Mantenemos /servicios porque es la página técnica común */}
+              {/* BOTÓN */}
               <Link to="/servicios" className="px-12 py-5 bg-brand-blue text-white font-bold flex items-center gap-3 hover:bg-blue-600 transition-all group uppercase text-[10px] tracking-[0.2em] rounded-sm text-center">
                 Ver Catálogo de Servicios
                 <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
 
-            {/* Logo de la Expo - Versión Mobile */}
+            {/* Logo de la Expo - Versión Inferior (MÓVILES Y PANTALLAS < 1536px) */}
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="block md:hidden text-center mt-20 border-t border-zinc-900 pt-12"
+              // CAMBIO ACÁ: de md:hidden a 2xl:hidden. 
+              // También agregué lg:mt-32 para que tenga buen aire en monitores medianos.
+              className="block 2xl:hidden text-center mt-20 lg:mt-32 border-t border-zinc-900 pt-12"
             >
               <p className="text-zinc-700 text-[9px] uppercase tracking-[0.4em] mb-6 font-bold">Proveedor Audiovisual</p>
               <img 
                 src="/logo-expo.png" 
                 alt="Logo Expo Minera San Juan" 
-                className="w-40 h-auto object-contain mx-auto opacity-60"
+                className="w-40 lg:w-48 h-auto object-contain mx-auto opacity-60"
               />
             </motion.div>
           </motion.div>

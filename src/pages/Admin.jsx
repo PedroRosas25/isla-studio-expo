@@ -5,7 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Phone, CheckCircle2, Clock, Building2, Search, Filter, Video, Trash2 } from "lucide-react";
 import { collection, query, onSnapshot, updateDoc, doc, orderBy, deleteDoc, writeBatch, getDocs, where } from "firebase/firestore";
 
-const ADMIN_EMAIL = "islastudio39@gmail.com";
+// AHORA SE LLAMA ADMIN_EMAILS (EN PLURAL)
+const ADMIN_EMAILS = [
+  "islastudio39@gmail.com", 
+  "pedrorosasaguilar9@gmail.com"
+];
 
 const Admin = () => {
   const [user, setUser] = useState(null);
@@ -24,7 +28,8 @@ const Admin = () => {
 
   // 2. Cargar Pedidos ordenados por Empresa
   useEffect(() => {
-    if (user?.email === ADMIN_EMAIL) {
+    // CAMBIO: Verificamos si el email está INCLUIDO en el array
+    if (user && ADMIN_EMAILS.includes(user.email)) {
       const q = query(collection(db, "presupuestos"), orderBy("empresa", "asc"));
       const unsub = onSnapshot(q, (snapshot) => {
         setPedidos(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
@@ -43,37 +48,37 @@ const Admin = () => {
     }
   };
 
-  // 1. Borrar un pedido individual
-const borrarPedido = async (id) => {
-  if (window.confirm("¿Estás seguro de que querés eliminar este registro?")) {
-    try {
-      await deleteDoc(doc(db, "presupuestos", id));
-    } catch (error) {
-      console.error("Error al borrar:", error);
+  // 4. Borrar un pedido individual
+  const borrarPedido = async (id) => {
+    if (window.confirm("¿Estás seguro de que querés eliminar este registro?")) {
+      try {
+        await deleteDoc(doc(db, "presupuestos", id));
+      } catch (error) {
+        console.error("Error al borrar:", error);
+      }
     }
-  }
-};
+  };
 
-// 2. Borrar todos los finalizados de una
-const limpiarFinalizados = async () => {
-  if (window.confirm("Se eliminarán todos los pedidos marcados como 'Finalizado'. ¿Continuar?")) {
-    try {
-      const q = query(collection(db, "presupuestos"), where("estado", "==", "Finalizado"));
-      const snapshot = await getDocs(q);
-      const batch = writeBatch(db);
-      
-      snapshot.docs.forEach((doc) => {
-        batch.delete(doc.ref);
-      });
+  // 5. Borrar todos los finalizados de una
+  const limpiarFinalizados = async () => {
+    if (window.confirm("Se eliminarán todos los pedidos marcados como 'Finalizado'. ¿Continuar?")) {
+      try {
+        const q = query(collection(db, "presupuestos"), where("estado", "==", "Finalizado"));
+        const snapshot = await getDocs(q);
+        const batch = writeBatch(db);
+        
+        snapshot.docs.forEach((doc) => {
+          batch.delete(doc.ref);
+        });
 
-      await batch.commit();
-    } catch (error) {
-      console.error("Error al limpiar finalizados:", error);
+        await batch.commit();
+      } catch (error) {
+        console.error("Error al limpiar finalizados:", error);
+      }
     }
-  }
-};
+  };
 
-    // Bloqueo de seguridad corregido
+  // Pantalla de Carga
   if (loading) {
     return (
       <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
@@ -85,11 +90,17 @@ const limpiarFinalizados = async () => {
   }
 
   console.log("Usuario actual:", user?.email);
-  // Usamos .toLowerCase() para evitar errores de mayúsculas/minúsculas
-  if (!user || user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+  
+  // CAMBIO: Verificamos el acceso si NO hay usuario o si NO está en la lista de ADMIN_EMAILS
+  if (!user || !ADMIN_EMAILS.includes(user.email)) {
     return (
       <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center p-6 text-center">
-        {/* ... (el resto del diseño de acceso denegado que ya tenías) ... */}
+         <h1 className="text-4xl text-brand-cream font-serif tracking-tighter uppercase mb-4">
+           Acceso Denegado
+         </h1>
+         <p className="text-zinc-500 text-sm tracking-widest uppercase">
+           Esta área es solo para administradores.
+         </p>
       </div>
     );
   }
@@ -137,6 +148,7 @@ const limpiarFinalizados = async () => {
             </button>
           </div>
         </header>
+        
       <main className="max-w-7xl mx-auto grid gap-4">
         <AnimatePresence>
           {pedidosFiltrados.map((pedido) => (
@@ -160,7 +172,7 @@ const limpiarFinalizados = async () => {
                   <div>
                     <span className="text-brand-cream text-[9px] uppercase font-bold block mb-1">Contacto</span>
                     <p className="text-xs font-medium">{pedido.userName}</p>
-                    <a href={`https://wa.me/${pedido.celular}`} target="_blank" className="text-brand-blue text-[10px] flex items-center gap-1 mt-1 hover:underline">
+                    <a href={`https://wa.me/${pedido.celular}`} target="_blank" rel="noreferrer" className="text-brand-blue text-[10px] flex items-center gap-1 mt-1 hover:underline">
                       <Phone size={10} /> {pedido.celular}
                     </a>
                   </div>
@@ -174,7 +186,7 @@ const limpiarFinalizados = async () => {
                         
                         {/* NUEVO: Mostrar nivel de edición si existe */}
                         {pedido.nivelEdicion && (
-                        <div className="mt-2 inline-flex items-center gap-1.5 bg-brand-blue/5 border border-brand-blue/20 px-2 py-0.5 rounded-sm">
+                        <div className="mt-2 inline-flex items-center gap-1.5 bg-brand-blue/5 border border-brand-blue/20 px-2 py-0.5 rounded-sm w-fit">
                             <Video size={10} className="text-brand-blue" />
                             <span className="text-[9px] uppercase font-bold text-brand-blue tracking-tighter">
                             Edición: {pedido.nivelEdicion}

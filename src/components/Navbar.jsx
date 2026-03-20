@@ -6,25 +6,22 @@ import { auth, googleProvider } from "../lib/firebase";
 import { onAuthStateChanged, signOut, signInWithPopup } from "firebase/auth";
 
 const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Email administrativo
-  const ADMIN_EMAIL = "islastudio39@gmail.com";
+  const ADMIN_EMAILS = [
+    "islastudio39@gmail.com", 
+    "pedrorosasaguilar9@gmail.com"
+  ];
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
       unsubscribe();
     };
   }, []);
@@ -38,7 +35,7 @@ const Navbar = () => {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       setIsOpen(false); 
-      if (user.email === ADMIN_EMAIL) {
+      if (ADMIN_EMAILS.includes(user.email)) {
         navigate("/admin-isla");
       }
     } catch (error) {
@@ -72,112 +69,125 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`fixed w-full z-[100] transition-all duration-300 ${scrolled ? "py-4 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800" : "py-8 bg-transparent"}`}>
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        
-        {/* LOGO */}
-        <Link 
-          to="/expo" 
-          onClick={scrollToTop} 
-          className={`relative z-[200] flex items-center gap-3 group transition-colors duration-500 ${isOpen ? 'text-brand-cream' : ''}`}
-        >
-          <img 
-            src="/logo-isla.png" 
-            alt="Isla Studio Logo" 
-            className="w-8 h-8 object-contain group-hover:scale-110 transition-transform duration-300" 
-          />
-          <span className="text-xl font-serif font-bold tracking-tighter text-brand-cream">
-            ISLA <span className="italic text-brand-blue">STUDIO</span>
-          </span>
-        </Link>
-
-        {/* LINKS DESKTOP */}
-        <div className="hidden md:flex items-center gap-10">
-          <Link to="/expo" onClick={scrollToTop} className="text-[10px] uppercase tracking-[0.4em] font-bold text-zinc-500 hover:text-brand-blue transition-colors">Inicio</Link>
-          <a href="#servicios-info" onClick={handleScrollToServicios} className="text-[10px] uppercase tracking-[0.4em] font-bold text-zinc-500 hover:text-brand-blue transition-colors">Servicios</a>
+    <>
+      <nav className="fixed top-0 left-0 right-0 z-[100] transition-all duration-300 bg-zinc-950/80 backdrop-blur-md border-b border-white/[0.05]">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center relative">
           
-          {/* ACCESO RÁPIDO ADMIN (Solo si es el mail de Isla) */}
-          {user?.email === ADMIN_EMAIL && (
-            <Link 
-              to="/admin-isla" 
-              className="flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] font-bold text-amber-400 border border-amber-400/30 px-3 py-1.5 rounded-sm hover:bg-amber-400 hover:text-black transition-all"
-            >
-              <ShieldCheck size={12} /> Master Panel
-            </Link>
-          )}
+          {/* 1. ZONA IZQUIERDA: LOGO */}
+          <Link 
+            to="/expo" 
+            onClick={scrollToTop} 
+            className={`relative z-[200] flex items-center gap-3 group transition-colors duration-500 ${isOpen ? 'text-brand-cream' : ''}`}
+          >
+            <img 
+              src="/logo-isla.png" 
+              alt="Isla Studio" 
+              className="h-8 w-auto transition-all group-hover:scale-105" 
+            />
+            <div className="flex flex-col">
+              <span className="font-serif text-xl tracking-tighter leading-none">
+                <span className="text-white">ISLA</span>
+                <span className="text-brand-blue font-bold italic ml-1.5">STUDIO</span>
+              </span>
+              <span className="text-[8px] uppercase tracking-[0.4em] text-zinc-500 font-bold hidden sm:block mt-1">
+                Creative Agency
+              </span>
+            </div>
+          </Link>
 
-          {user && user.email !== ADMIN_EMAIL && (
-            <Link 
-              to="/mis-presupuestos" 
-              className="text-[10px] uppercase tracking-[0.4em] font-bold text-brand-blue border-b border-brand-blue/30 pb-1"
-            >
-              Mis Pedidos
-            </Link>
-          )}
+          {/* 2. ZONA DERECHA: TODOS LOS LINKS Y BOTONES UNIFICADOS */}
+          <div className="hidden lg:flex items-center gap-6 xl:gap-8">
+            
+            <a href="#servicios-info" onClick={handleScrollToServicios} className="text-[10px] font-bold text-zinc-400 uppercase tracking-[0.3em] hover:text-brand-blue transition-all cursor-pointer relative group">
+              Servicios
+              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-brand-blue transition-all group-hover:w-full"></span>
+            </a>
+            
+            {user && !ADMIN_EMAILS.includes(user.email) && (
+              <Link to="/mis-presupuestos" className="text-[10px] font-bold text-zinc-400 uppercase tracking-[0.3em] hover:text-brand-blue transition-all cursor-pointer relative group">
+                Mis Pedidos
+                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-brand-blue transition-all group-hover:w-full"></span>
+              </Link>
+            )}
 
-          <div className="flex items-center gap-4 ml-4">
+            {user && ADMIN_EMAILS.includes(user.email) && (
+              <Link to="/admin-isla" className="flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] font-bold text-amber-400 border border-amber-400/30 px-3 py-1.5 rounded-sm hover:bg-amber-400 hover:text-black transition-all">
+                <ShieldCheck size={12} /> Master Panel
+              </Link>
+            )}
+
+            {/* Separador vertical sutil */}
+            <div className="h-5 w-px bg-white/10 mx-1"></div>
+
             {user ? (
-              <button onClick={handleLogout} className="flex items-center gap-2 text-zinc-600 hover:text-red-500 transition-colors text-[9px] uppercase tracking-widest font-bold mr-2">
+              <button onClick={handleLogout} className="flex items-center gap-2 text-zinc-600 hover:text-red-500 transition-colors text-[9px] uppercase tracking-widest font-bold">
                 <LogOut size={12} /> Salir
               </button>
             ) : (
-              <button onClick={handleLogin} className="flex items-center gap-2 text-brand-blue hover:text-brand-cream transition-colors text-[9px] uppercase tracking-widest font-bold mr-2">
+              <button onClick={handleLogin} className="flex items-center gap-2 text-brand-blue hover:text-brand-cream transition-colors text-[9px] uppercase tracking-widest font-bold">
                 <User size={12} /> Acceder
               </button>
             )}
 
-            <Link to="/" className="flex items-center gap-2 px-5 py-2.5 border border-zinc-800 text-zinc-400 text-[10px] uppercase tracking-[0.2em] font-bold hover:text-brand-cream hover:border-zinc-600 transition-all rounded-sm">
+            <Link to="/" className="flex items-center gap-2 text-[9px] font-bold tracking-[0.2em] border border-brand-blue/30 px-4 py-2 rounded-sm text-brand-blue hover:bg-brand-blue hover:text-white transition-all uppercase">
               Productora <ArrowUpRight size={12} />
             </Link>
 
-            <Link to="/servicios" className="px-8 py-2.5 bg-brand-blue text-white text-[10px] uppercase tracking-[0.2em] font-bold rounded-sm hover:shadow-[0_0_20px_rgba(0,122,255,0.4)] transition-all">
+            <Link to="/servicios" className="flex items-center gap-3 px-6 py-2 bg-brand-blue text-white text-[10px] font-bold uppercase tracking-[0.3em] rounded-sm hover:bg-blue-600 transition-all group shadow-[0_0_15px_rgba(0,122,255,0.2)]">
               Presupuestar
             </Link>
           </div>
+
+          {/* MENÚ MÓVIL BURGER */}
+          <button 
+            className="lg:hidden relative z-[200] text-brand-cream p-2 focus:outline-none" 
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <X size={28} strokeWidth={1.5} /> : <Menu size={28} strokeWidth={1.5} />}
+          </button>
         </div>
+      </nav>
 
-        <button 
-          className="md:hidden relative z-[200] text-brand-cream p-2 focus:outline-none" 
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X size={32} strokeWidth={1} /> : <Menu size={32} strokeWidth={1} />}
-        </button>
-      </div>
-
-      {/* MENU MOBILE */}
+      {/* MENÚ MOBILE DESPLEGABLE (Sin cambios) */}
       <AnimatePresence>
         {isOpen && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className="fixed inset-0 top-0 left-0 w-full h-[100dvh] z-[150] bg-zinc-950 flex flex-col justify-center items-center"
+            className="fixed inset-0 z-[150] bg-zinc-950 flex flex-col"
           >
-            <div className="absolute inset-0 opacity-[0.07] pointer-events-none" style={{ backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, backgroundSize: '45px 45px' }}></div>
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, backgroundSize: '40px 40px' }}></div>
 
-            <div className="relative z-10 flex flex-col items-center gap-8 w-full pt-20">
+            <div className="flex items-center justify-between px-6 h-20 shrink-0 border-b border-white/5 relative z-10">
+              <div className="flex flex-col">
+                <span className="font-serif text-xl tracking-tighter leading-none">
+                  <span className="text-white">ISLA</span>
+                  <span className="text-brand-blue font-bold italic ml-1.5">STUDIO</span>
+                </span>
+              </div>
+              <button onClick={() => setIsOpen(false)} className="text-white p-2">
+                <X size={32} strokeWidth={1} />
+              </button>
+            </div>
+
+            <div className="flex flex-col justify-center flex-grow px-10 gap-8 relative z-10">
               {[
                 { name: "Inicio", path: "/expo", action: scrollToTop },
                 { name: "Servicios", path: "#servicios-info", action: handleScrollToServicios },
                 { name: "Ir a Productora", path: "/" },
-                // Mostrar Master Panel en Mobile si es el admin
-                user?.email === ADMIN_EMAIL && { name: "MASTER PANEL", path: "/admin-isla", isAdmin: true },
-                user && user.email !== ADMIN_EMAIL && { name: "Mis Pedidos", path: "/mis-presupuestos" },
+                user && ADMIN_EMAILS.includes(user.email) && { name: "MASTER PANEL", path: "/admin-isla", isAdmin: true },
+                user && !ADMIN_EMAILS.includes(user.email) && { name: "Mis Pedidos", path: "/mis-presupuestos" },
                 !user && { name: "Iniciar Sesión", action: handleLogin, isLogin: true },
-                { name: "Presupuestar", path: "/servicios", highlight: true }
-              ].filter(Boolean).map((link, i) => (
-                <motion.div key={link.name} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i + 0.2 }} className="w-full text-center">
+              ].filter(Boolean).map((link, index) => (
+                <motion.div key={link.name} initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: index * 0.1 }}>
                   {link.isLogin ? (
-                    <button onClick={link.action} className="text-5xl font-serif text-brand-blue italic tracking-tighter hover:text-brand-cream transition-all">{link.name}</button>
+                    <button onClick={link.action} className="text-4xl font-serif text-brand-blue italic hover:text-brand-cream transition-colors block">{link.name}</button>
                   ) : (
                     <Link 
                       to={link.path.startsWith('#') ? "/expo" : link.path} 
                       onClick={link.path === "#servicios-info" ? handleScrollToServicios : link.action ? link.action : () => setIsOpen(false)}
-                      className={`text-5xl font-serif tracking-tighter transition-all 
-                        ${link.isAdmin ? "text-amber-400 not-italic" : 
-                          link.highlight ? "text-brand-blue not-italic underline underline-offset-8" : 
-                          "text-brand-cream hover:text-brand-blue"}`}
+                      className={`text-4xl font-serif cursor-pointer transition-colors block ${link.isAdmin ? "text-amber-400" : "text-white hover:text-brand-blue"}`}
                     >
                       {link.name}
                     </Link>
@@ -185,21 +195,28 @@ const Navbar = () => {
                 </motion.div>
               ))}
 
+              <Link 
+                to="/servicios" 
+                onClick={() => setIsOpen(false)}
+                className="mt-4 text-[11px] font-bold tracking-[0.4em] text-brand-blue uppercase border-t border-brand-blue/20 pt-8"
+              >
+                — Armar Presupuesto
+              </Link>
+              
               {user && (
-                <motion.button onClick={handleLogout} className="mt-4 text-zinc-600 text-[10px] uppercase tracking-[0.5em] font-bold flex items-center gap-2">
-                  <LogOut size={14} /> Salir de la terminal
+                <motion.button onClick={handleLogout} className="mt-4 text-zinc-600 text-[10px] uppercase tracking-[0.5em] font-bold flex items-center gap-2 text-left w-fit">
+                  <LogOut size={14} /> Salir de la cuenta
                 </motion.button>
               )}
             </div>
 
-            <div className="absolute bottom-16 flex flex-col items-center gap-2 opacity-20 pb-4">
-              <div className="h-[1px] w-40 bg-brand-blue"></div>
-              <span className="text-[8px] uppercase tracking-[0.8em] text-brand-cream font-bold">Isla Studio — Expo 2026</span>
+            <div className="p-10 relative z-10 flex justify-between items-center opacity-40">
+                <span className="text-[8px] tracking-[0.5em] uppercase text-white">San Juan / ARG</span>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   );
 };
 

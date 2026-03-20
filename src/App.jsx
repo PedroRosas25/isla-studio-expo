@@ -24,6 +24,12 @@ function PageTitleHandler() {
   const location = useLocation();
 
   useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'auto';
+    }
+  }, []);
+
+  useEffect(() => {
     if (location.pathname === '/') {
       document.title = "Isla Studio | Productora Audiovisual";
     } else if (location.pathname.startsWith('/expo')) {

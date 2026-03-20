@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 // IMPORTACIÓN DE ESTILOS VIEJOS
 import '../styles/OldLanding.css'; 
 
@@ -13,10 +13,6 @@ import ContactoOld from '../components/ContactoOld';
 import WppFloat from '../components/WppFloat';
 
 const HomePrincipal = () => {
-  // Opcional: Volver arriba cuando se carga la página
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   return (
     /* Usamos una clase wrapper para aislar los estilos viejos */

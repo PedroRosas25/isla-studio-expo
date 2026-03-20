@@ -173,7 +173,6 @@ const Navbar = () => {
 
             <div className="flex flex-col justify-center flex-grow px-10 gap-8 relative z-10">
               {[
-                { name: "Inicio", path: "/expo", action: scrollToTop },
                 { name: "Servicios", path: "#servicios-info", action: handleScrollToServicios },
                 { name: "Ir a Productora", path: "/" },
                 user && ADMIN_EMAILS.includes(user.email) && { name: "MASTER PANEL", path: "/admin-isla", isAdmin: true },

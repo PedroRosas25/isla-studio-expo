@@ -167,7 +167,7 @@ const Servicios = () => {
                   <button
                     key={dia}
                     onClick={() => setFormData({...formData, fechas: toggleOption(formData.fechas, dia)})}
-                    className={`group relative p-8 transition-all duration-300 border ${formData.fechas.includes(dia) ? 'bg-brand-blue border-brand-blue' : 'bg-mining-dark/40 border-zinc-900 hover:border-zinc-700'}`}
+                    className={`group relative p-8 transition-all duration-300 border ${formData.fechas.includes(dia) ? 'bg-brand-blue border-brand-blue' : 'bg-mining-dark/40 border-zinc-500 hover:border-zinc-700'}`}
                   >
                     <span className={`block text-5xl font-sans italic mb-1 ${formData.fechas.includes(dia) ? 'text-white' : 'text-brand-white'}`}>{dia}</span>
                     <span className={`text-[10px] uppercase tracking-widest ${formData.fechas.includes(dia) ? 'text-blue-100' : 'text-brand-white'}`}>Mayo 2026</span>
@@ -199,7 +199,7 @@ const Servicios = () => {
                     className={`flex items-center justify-between p-6 border transition-all duration-300 ${
                       formData.servicios.includes(item.id) 
                         ? 'border-brand-blue bg-brand-blue/10' 
-                        : 'border-zinc-900 bg-mining-dark/20 hover:border-zinc-700'
+                        : 'border-zinc-500 bg-mining-dark/20 hover:border-zinc-700'
                     }`}
                   >
                     <div className="flex items-center gap-6">
@@ -256,7 +256,7 @@ const Servicios = () => {
                       <button
                         key={nivel}
                         onClick={() => setFormData({...formData, nivelEdicion: nivel})}
-                        className={`py-4 px-4 border text-[10px] uppercase font-bold tracking-widest transition-all ${formData.nivelEdicion === nivel ? 'bg-brand-blue text-white border-brand-blue' : 'border-zinc-900 text-brand-white hover:border-zinc-700'}`}
+                        className={`py-4 px-4 border text-[10px] uppercase font-bold tracking-widest transition-all ${formData.nivelEdicion === nivel ? 'bg-brand-blue text-white border-brand-blue' : 'border-zinc-500 text-brand-white hover:border-zinc-700'}`}
                       >
                         {nivel}
                       </button>
@@ -268,7 +268,7 @@ const Servicios = () => {
           </div>
 
           <aside className="sticky top-10 space-y-6">
-            <div className="bg-mining-dark/40 border border-zinc-900 p-8 rounded-sm">
+            <div className="bg-mining-dark/40 border border-zinc-500 p-8 rounded-sm">
               <h4 className="text-[10px] font-bold tracking-[0.4em] text-brand-blue uppercase mb-8 border-b border-zinc-800 pb-4 font-serif italic">Resumen de Solicitud</h4>
               
               <div className="space-y-6">
@@ -316,7 +316,7 @@ const Servicios = () => {
                         placeholder="NOMBRE DE EMPRESA / STAND"
                         value={formData.empresa}
                         onChange={(e) => setFormData({...formData, empresa: e.target.value.toUpperCase()})}
-                        className="w-full bg-zinc-950 border border-zinc-800 py-4 pl-12 pr-4 text-[10px] font-bold tracking-widest text-brand-white focus:border-brand-blue outline-none transition-colors"
+                        className="w-full bg-zinc-950 border border-zinc-500 py-4 pl-12 pr-4 text-[10px] font-bold tracking-widest text-brand-white focus:border-brand-blue outline-none transition-colors"
                       />
                     </div>
 
@@ -327,7 +327,7 @@ const Servicios = () => {
                         placeholder="CELULAR DE CONTACTO"
                         value={formData.celular}
                         onChange={(e) => setFormData({...formData, celular: e.target.value})}
-                        className="w-full bg-zinc-950 border border-zinc-800 py-4 pl-12 pr-4 text-[10px] font-bold tracking-widest text-brand-white focus:border-brand-blue outline-none transition-colors"
+                        className="w-full bg-zinc-950 border border-zinc-500 py-4 pl-12 pr-4 text-[10px] font-bold tracking-widest text-brand-white focus:border-brand-blue outline-none transition-colors"
                       />
                     </div>
 

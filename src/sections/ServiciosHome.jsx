@@ -99,7 +99,7 @@ const ServiciosHome = () => {
           <p className="text-brand-white text-[10px] uppercase tracking-[0.4em] mb-8">¿Listo para potenciar su stand?</p>
           <Link 
             to="/servicios" 
-            className="px-12 py-5 border border-zinc-800 text-brand-cream font-bold hover:bg-brand-blue hover:border-brand-blue transition-all uppercase text-[10px] tracking-[0.2em] rounded-sm flex items-center gap-4 group"
+            className="px-12 py-5 border border-zinc-500 text-brand-cream font-bold hover:bg-brand-blue hover:border-brand-blue transition-all uppercase text-[10px] tracking-[0.2em] rounded-sm flex items-center gap-4 group"
           >
             Configurar Presupuesto Personalizado
             <ChevronRight size={16} className="group-hover:translate-x-2 transition-transform" />

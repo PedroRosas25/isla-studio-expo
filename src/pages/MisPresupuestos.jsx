@@ -74,8 +74,8 @@ const MisPresupuestos = () => {
 
   return (
     <div className="min-h-screen bg-zinc-950 pt-40 pb-20 px-6 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-           style={{ backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, backgroundSize: '60px 60px' }}>
+      <div className="absolute inset-0 opacity-[0.065] pointer-events-none" 
+           style={{ backgroundImage: `linear-gradient(#fff 2px, transparent 2px), linear-gradient(90deg, #ffffff 2px, transparent 2px)`, backgroundSize: '60px 60px' }}>
       </div>
 
       <div className="max-w-5xl mx-auto relative z-10">
@@ -85,7 +85,7 @@ const MisPresupuestos = () => {
         </h1>
 
         {presupuestos.length === 0 ? (
-          <div className="border border-zinc-900 p-12 bg-zinc-950/50">
+          <div className="border border-zinc-500 p-12 bg-zinc-950/50">
             <p className="text-zinc-600 font-bold uppercase text-[9px] tracking-[0.4em]">Sin registros activos en esta cuenta.</p>
           </div>
         ) : (

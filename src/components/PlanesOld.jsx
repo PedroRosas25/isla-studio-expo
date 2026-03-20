@@ -20,8 +20,8 @@ function PlanesOld() {
     <section id="planes" className="py-32 bg-zinc-950 border-t border-zinc-900 text-brand-cream px-6 relative overflow-hidden">
       
       {/* Grilla técnica de fondo */}
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none" 
-           style={{ backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, backgroundSize: '60px 60px' }}>
+      <div className="absolute inset-0 opacity-[0.065] pointer-events-none" 
+           style={{ backgroundImage: `linear-gradient(#fff 2px, transparent 2px), linear-gradient(90deg, #ffffff 2px, transparent 2px)`, backgroundSize: '60px 60px' }}>
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
@@ -43,7 +43,7 @@ function PlanesOld() {
         <div className="mb-32">
           <div className="flex items-center gap-4 mb-12">
             <LayoutGrid className="text-brand-blue" size={20} strokeWidth={1.5} />
-            <h3 className="text-[12px] uppercase tracking-[0.4em] font-bold text-zinc-500">Contratación Modular</h3>
+            <h3 className="text-[12px] uppercase tracking-[0.4em] font-bold text-brand-cream">Contratación Modular</h3>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -54,7 +54,7 @@ function PlanesOld() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-mining-dark/10 border border-zinc-900 p-10 rounded-sm group hover:border-brand-blue/30 transition-all duration-500"
+                className="bg-mining-dark/10 border border-zinc-500 p-10 rounded-sm group hover:border-brand-blue/30 transition-all duration-500"
               >
                 <h4 className="text-2xl font-serif mb-8 text-brand-cream">
                     {mod.categoria.includes("&") ? (
@@ -72,7 +72,7 @@ function PlanesOld() {
                       {item}
                     </li>
                   )) : mod.incluye.map((item, i) => (
-                    <li key={i} className="flex items-center gap-3 text-zinc-500 text-sm group-hover:text-zinc-400 transition-colors">
+                    <li key={i} className="flex items-center gap-3 text-zinc-200 text-sm group-hover:text-zinc-400 transition-colors">
                       <div className="w-1.5 h-1.5 bg-brand-blue rounded-full opacity-40" />
                       {item}
                     </li>
@@ -87,7 +87,7 @@ function PlanesOld() {
         <div>
           <div className="flex items-center gap-4 mb-12">
             <Package className="text-brand-blue" size={20} strokeWidth={1.5} />
-            <h3 className="text-[12px] uppercase tracking-[0.4em] font-bold text-zinc-500">Planes Integrales</h3>
+            <h3 className="text-[12px] uppercase tracking-[0.4em] font-bold text-brand-cream">Planes Integrales</h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -101,7 +101,7 @@ function PlanesOld() {
                 className={`p-10 border flex flex-col h-full relative transition-all duration-500 rounded-sm ${
                   plan.destacado 
                     ? 'bg-brand-blue/5 border-brand-blue shadow-[0_0_40px_rgba(0,122,255,0.1)]' 
-                    : 'bg-zinc-950 border-zinc-900 hover:border-zinc-700'
+                    : 'bg-zinc-950 border-zinc-500 hover:border-zinc-700'
                 }`}
               >
                 {plan.destacado && (

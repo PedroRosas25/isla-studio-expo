@@ -16,8 +16,8 @@ function ServiciosDetallados() {
     <section id="servicios" className="py-32 bg-zinc-950 border-t border-zinc-900 px-6 relative overflow-hidden">
       
       {/* Grilla técnica de fondo */}
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none" 
-           style={{ backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, backgroundSize: '60px 60px' }}>
+      <div className="absolute inset-0 opacity-[0.065] pointer-events-none" 
+           style={{ backgroundImage: `linear-gradient(#fff 2px, transparent 2px), linear-gradient(90deg, #ffffff 2px, transparent 2px)`, backgroundSize: '60px 60px' }}>
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
@@ -35,7 +35,7 @@ function ServiciosDetallados() {
           <div className="h-[1px] w-24 bg-brand-blue/40"></div>
         </motion.div>
 
-        <div className="flex flex-col border-t border-zinc-900">
+        <div className="flex flex-col border-t border-zinc-500">
           {servicios.map((servicio, index) => (
             <motion.div
               key={servicio.id}
@@ -43,14 +43,14 @@ function ServiciosDetallados() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="group relative py-14 border-b border-zinc-900 flex flex-col md:flex-row md:items-center justify-between gap-8 hover:bg-white/[0.01] transition-all duration-500 px-4"
+              className="group relative py-14 border-b border-zinc-500 flex flex-col md:flex-row md:items-center justify-between gap-8 hover:bg-white/[0.01] transition-all duration-500 px-4"
             >
               {/* Sección Izquierda: ID, Icono y Título */}
               <div className="flex items-center gap-6 md:gap-12 md:w-5/12">
-                <span className="font-mono text-zinc-800 group-hover:text-brand-blue transition-colors duration-500 text-xs tracking-widest">
+                <span className="font-mono text-zinc-500 group-hover:text-brand-blue transition-colors duration-500 text-xs tracking-widest">
                   [{servicio.id}]
                 </span>
-                <div className="text-zinc-600 group-hover:text-brand-blue transition-all duration-500 transform group-hover:scale-110">
+                <div className="text-zinc-500 group-hover:text-brand-blue transition-all duration-500 transform group-hover:scale-110">
                   {servicio.icono}
                 </div>
                 <h3 className="text-2xl md:text-3xl font-serif text-brand-cream tracking-tight">

@@ -25,8 +25,8 @@ function Valores() {
     <section id="valores" className="py-32 bg-zinc-950 border-t border-zinc-900 text-brand-cream px-6 relative overflow-hidden">
       
       {/* Grilla técnica de fondo (sutil) */}
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none" 
-           style={{ backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, backgroundSize: '40px 40px' }}>
+      <div className="absolute inset-0 opacity-[0.065] pointer-events-none" 
+           style={{ backgroundImage: `linear-gradient(#fff 2px, transparent 2px), linear-gradient(90deg, #ffffff 2px, transparent 2px)`, backgroundSize: '60px 60px' }}>
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
@@ -52,7 +52,7 @@ function Valores() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="group relative p-10 bg-mining-dark/20 border border-zinc-900 hover:border-brand-blue/40 transition-all duration-500 rounded-sm"
+              className="group relative p-10 bg-mining-dark/20 border border-zinc-500 hover:border-brand-blue/40 transition-all duration-500 rounded-sm"
             >
               {/* Overlay de gradiente sutil al hacer hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>

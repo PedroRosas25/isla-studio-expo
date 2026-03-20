@@ -35,8 +35,8 @@ function HeroOld() {
       className="relative min-h-[100dvh] flex flex-col justify-center items-center bg-zinc-950 overflow-hidden"
     >
       {/* 1. GRILLA TÉCNICA (Identidad Expo) */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-           style={{ backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, backgroundSize: '60px 60px' }}>
+      <div className="absolute inset-0 opacity-[0.065] pointer-events-none" 
+           style={{ backgroundImage: `linear-gradient(#fff 2px, transparent 2px), linear-gradient(90deg, #ffffff 2px, transparent 2px)`, backgroundSize: '60px 60px' }}>
       </div>
 
       {/* 2. GRADIENTE DE FONDO AZUL SUAVE */}

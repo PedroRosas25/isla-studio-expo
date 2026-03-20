@@ -4,8 +4,8 @@ const LegalLayout = ({ titulo, contenido }) => {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-400 relative overflow-hidden">
       {/* Grilla técnica de fondo - Continuidad Estética */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-           style={{ backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, backgroundSize: '60px 60px' }}>
+      <div className="absolute inset-0 opacity-[0.065] pointer-events-none" 
+           style={{ backgroundImage: `linear-gradient(#fff 3px, transparent 3px), linear-gradient(90deg, #ffffff 3px, transparent 3px)`, backgroundSize: '60px 60px' }}>
       </div>
 
       <main className="max-w-4xl mx-auto px-6 pt-40 pb-20 relative z-10">

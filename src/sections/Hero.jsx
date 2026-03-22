@@ -4,7 +4,7 @@ import { ChevronRight, Camera, Video, Palette, Code } from "lucide-react";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen bg-zinc-950 flex flex-col justify-center overflow-hidden pt-20 md:pt-0">
+    <section className="relative min-h-screen bg-zinc-950 flex flex-col justify-center overflow-hidden pt-32 pb-12 md:py-0">
       
       {/* 1. Logo de la Expo - Versión Desktop (SOLO PANTALLAS GIGANTES) */}
       <motion.div 

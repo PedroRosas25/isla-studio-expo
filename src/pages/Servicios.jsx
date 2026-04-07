@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Check, Camera, Video, Palette, Code, Mail, LogOut, Phone, ArrowUpRight, Building2, MessageCircle } from "lucide-react";
+import { Check, Camera, Video, Palette, Code, Mail, Phone, ArrowUpRight } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { FaWhatsapp } from "react-icons/fa";
 import emailjs from '@emailjs/browser';
@@ -11,10 +11,11 @@ import { auth, googleProvider, db } from "../lib/firebase";
 import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
+// Nombres actualizados para la base de datos y los correos
 const SERVICIOS_NOMBRES = {
-  foto: 'Fotografía',
-  video: 'Producción Audiovisual',
-  diseño: 'Soporte Gráfico',
+  foto: 'Fotografía y Diseño Estratégico',
+  video: 'Soluciones de Filmografía y Video',
+  diseño: 'Diseño y Branding Off/On-site',
   web: 'Despliegue Web'
 };
 
@@ -35,14 +36,12 @@ const Servicios = () => {
   // Bloquear/Desbloquear scroll cuando aparece el modal
   useEffect(() => {
     if (showSuccess) {
-      // Guardamos la posición actual para que no "salte" la pantalla
       const scrollY = window.scrollY;
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollY}px`;
       document.body.style.width = '100%';
-      document.body.style.overflowY = 'scroll'; // Mantiene la barra para que no vibre el layout
+      document.body.style.overflowY = 'scroll'; 
     } else {
-      // Restauramos el scroll
       const scrollY = document.body.style.top;
       document.body.style.position = '';
       document.body.style.top = '';
@@ -183,12 +182,28 @@ const Servicios = () => {
               </h3>
               <div className="grid md:grid-cols-1 gap-2">
                 {[
-                  { id: 'foto', label: 'Cobertura Fotográfica', icon: <Camera size={20}/> },
-                  { id: 'video', label: 'Producción Audiovisual', icon: <Video size={20}/> },
-                  { id: 'diseño', label: 'Soporte Gráfico & Identidad', icon: <Palette size={20}/> },
+                  { 
+                    id: 'foto', 
+                    label: 'Fotografía y Diseño Estratégico', 
+                    desc: 'Cobertura Fotográfica Profesional. Captura de hitos y relaciones públicas durante la jornada. Entrega de 30 a 50 fotografías finales, ajustadas según los requerimientos y el contrato.',
+                    icon: <Camera size={20}/> 
+                  },
+                  { 
+                    id: 'video', 
+                    label: 'Soluciones de Filmografía y Video (Por Jornada)', 
+                    desc: '',
+                    icon: <Video size={20}/> 
+                  },
+                  { 
+                    id: 'diseño', 
+                    label: 'Diseño y Branding Off/On-site', 
+                    desc: 'Servicio completo de desarrollo visual por marca. Incluye manual de marca para el evento, folletería técnica y carruseles de alto impacto.',
+                    icon: <Palette size={20}/> 
+                  },
                   { 
                     id: 'web', 
                     label: 'Despliegue Web', 
+                    desc: '',
                     icon: <Code size={20}/>,
                     hasWhatsApp: true 
                   },
@@ -196,47 +211,47 @@ const Servicios = () => {
                   <button
                     key={item.id}
                     onClick={() => setFormData({...formData, servicios: toggleOption(formData.servicios, item.id)})}
-                    className={`flex items-center justify-between p-6 border transition-all duration-300 ${
+                    className={`flex items-start justify-between p-6 border transition-all duration-300 text-left ${
                       formData.servicios.includes(item.id) 
                         ? 'border-brand-blue bg-brand-blue/10' 
                         : 'border-zinc-500 bg-mining-dark/20 hover:border-zinc-700'
                     }`}
                   >
-                    <div className="flex items-center gap-6">
-                      <div className={formData.servicios.includes(item.id) ? 'text-brand-blue' : 'text-brand-white'}>
+                    <div className="flex items-start gap-6">
+                      <div className={`mt-1 ${formData.servicios.includes(item.id) ? 'text-brand-blue' : 'text-brand-white'}`}>
                         {item.icon}
                       </div>
                       
-                      <div className="flex flex-col md:flex-row md:items-center gap-4">
-                        <span className="font-serif text-xl text-brand-cream text-left">
-                          {item.label.includes("&") ? (
-                            <>
-                              {item.label.split("&")[0]} 
-                              <span className="font-sans italic mx-1">&</span> 
-                              {item.label.split("&")[1]}
-                            </>
-                          ) : (
-                            item.label
-                          )}
+                      <div className="flex flex-col gap-2">
+                        <span className="font-serif text-xl text-brand-cream">
+                          {item.label}
                         </span>
+                        
+                        {item.desc && (
+                          <p className="text-brand-white text-sm font-light leading-relaxed max-w-xl pr-4">
+                            {item.desc}
+                          </p>
+                        )}
 
-                        {/* BOTÓN WHATSAPP CON react-icons */}
+                        {/* BOTÓN WHATSAPP */}
                         {item.hasWhatsApp && (
-                          <a 
-                            href="https://wa.me/542645624688?text=Hola! Me gustaría consultar el precio por el servicio de Despliegue Web."
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            className="w-fit px-3 py-1 bg-green-600/20 border border-green-500/50 text-green-400 text-[10px] uppercase tracking-widest font-bold rounded-full hover:bg-green-600 hover:text-white transition-all flex items-center gap-2 group/wa"
-                          >
-                            <FaWhatsapp size={14} className="text-green-500 group-hover/wa:text-white transition-colors" />
-                            Consultar Precio
-                          </a>
+                          <div className="mt-2">
+                            <a 
+                              href="https://wa.me/542645624688?text=Hola! Me gustaría consultar el precio por el servicio de Despliegue Web."
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="w-fit px-3 py-1.5 bg-green-600/20 border border-green-500/50 text-green-400 text-[10px] uppercase tracking-widest font-bold rounded-full hover:bg-green-600 hover:text-white transition-all flex items-center gap-2 group/wa"
+                            >
+                              <FaWhatsapp size={14} className="text-green-500 group-hover/wa:text-white transition-colors" />
+                              Consultar Precio
+                            </a>
+                          </div>
                         )}
                       </div>
                     </div>
 
-                    <div className={`transition-opacity duration-300 ${formData.servicios.includes(item.id) ? 'opacity-100' : 'opacity-0'}`}>
+                    <div className={`mt-1 transition-opacity duration-300 ${formData.servicios.includes(item.id) ? 'opacity-100' : 'opacity-0'}`}>
                       <Check size={18} className="text-brand-blue" />
                     </div>
                   </button>
@@ -251,14 +266,53 @@ const Servicios = () => {
                   <h3 className="text-xs font-bold tracking-[0.4em] text-brand-white uppercase mb-8 flex items-center gap-4 font-serif">
                     <span className="text-brand-blue italic">03</span> Post-Producción
                   </h3>
-                  <div className="grid grid-cols-2 gap-2">
-                    {['Básico', 'Intermedio', 'Avanzado', 'Institucional'].map(nivel => (
+                  
+                  {/* GRILLA DE PLANES CON DESCRIPCIONES */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      {
+                        id: 'Básico',
+                        titulo: 'Plan básico (Volumen alto)',
+                        desc: 'Optimizado para la cobertura en tiempo real. Incluye la entrega de 10 historias de Instagram. Captura vertical, perfeccionamiento de audio y subtitulado para consumo rápido y directo.'
+                      },
+                      {
+                        id: 'Intermedio',
+                        titulo: 'Plan intermedio (Narrativo)',
+                        desc: 'Enfoque narrativo. Incluye hasta 5 contenidos (Reels) con cortes rítmicos, selección musical según contexto y diseño visual de subtítulos para mayor retención.'
+                      },
+                      {
+                        id: 'Avanzado',
+                        titulo: 'Plan avanzado (Cine-Digital)',
+                        desc: 'El estándar más alto. Incluye hasta 5 contenidos (Reels/Video de alta calidad) con edición profesional, corrección de color, recursos premium y animaciones avanzadas.'
+                      },
+                      {
+                        id: 'Institucional',
+                        titulo: 'Plan institucional',
+                        desc: 'Entrega de 1 contenido institucional de edición cinematográfica. Diseñado para medios masivos y presentaciones de alto nivel, con sonido masterizado para proyección institucional.'
+                      }
+                    ].map(plan => (
                       <button
-                        key={nivel}
-                        onClick={() => setFormData({...formData, nivelEdicion: nivel})}
-                        className={`py-4 px-4 border text-[10px] uppercase font-bold tracking-widest transition-all ${formData.nivelEdicion === nivel ? 'bg-brand-blue text-white border-brand-blue' : 'border-zinc-500 text-brand-white hover:border-zinc-700'}`}
+                        key={plan.id}
+                        onClick={() => setFormData({...formData, nivelEdicion: plan.id})}
+                        className={`p-6 border text-left flex flex-col gap-3 transition-all duration-300 ${
+                          formData.nivelEdicion === plan.id 
+                            ? 'bg-brand-blue/10 border-brand-blue shadow-[0_0_15px_rgba(0,112,243,0.1)]' 
+                            : 'bg-mining-dark/20 border-zinc-500 hover:border-zinc-700'
+                        }`}
                       >
-                        {nivel}
+                        <div className="flex justify-between items-start w-full gap-4">
+                          <span className={`text-[10px] uppercase font-bold tracking-widest leading-relaxed ${
+                            formData.nivelEdicion === plan.id ? 'text-brand-blue' : 'text-brand-white'
+                          }`}>
+                            {plan.titulo}
+                          </span>
+                          <div className={`mt-0.5 transition-opacity duration-300 ${formData.nivelEdicion === plan.id ? 'opacity-100' : 'opacity-0'}`}>
+                            <Check size={14} className="text-brand-blue" />
+                          </div>
+                        </div>
+                        <p className="text-white text-xs font-light leading-relaxed">
+                          {plan.desc}
+                        </p>
                       </button>
                     ))}
                   </div>
@@ -351,34 +405,30 @@ const Servicios = () => {
         </div>
       </main>
 
-      {/* MODAL DE ÉXITO - OPTIMIZADO PARA MÓVIL */}
+      {/* MODAL DE ÉXITO */}
       <AnimatePresence>
         {showSuccess && (
           <div className="fixed inset-0 z-[300] flex items-center justify-center px-6">
-            {/* Fondo oscuro SOLIDO (Sin blur para evitar lag) */}
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setShowSuccess(false)}
-              className="absolute inset-0 bg-zinc-950/80" // Quitamos backdrop-blur-sm
+              className="absolute inset-0 bg-zinc-950/80" 
             />
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }} // Animación más sutil
+              initial={{ opacity: 0, scale: 0.95 }} 
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              /* Transición simplificada: duración fija es menos costosa que spring en móviles viejos */
               transition={{ duration: 0.2, ease: "easeOut" }}
               style={{ 
                 backfaceVisibility: "hidden", 
                 transform: "translateZ(0)",
-                willChange: "transform, opacity" // Le avisa al navegador que se prepare
+                willChange: "transform, opacity" 
               }}
               className="relative z-50 bg-zinc-900 border border-zinc-800 p-10 text-center max-w-md w-full overflow-hidden shadow-2xl"
             >
-              {/* Eliminamos la grilla dinámica por una estática si es necesario, 
-                  o la dejamos pero con un z-index bajo */}
               <div className="absolute inset-0 opacity-[0.02] pointer-events-none" 
                    style={{ backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, backgroundSize: '30px 30px' }}>
               </div>
@@ -386,7 +436,6 @@ const Servicios = () => {
               <div className="relative z-10">
                 <div className="w-16 h-16 bg-brand-blue/10 border border-brand-blue/20 rounded-full flex items-center justify-center mx-auto mb-8">
                   <ArrowUpRight className="text-brand-blue" size={32} />
-                  {/* Quitamos la animación infinita de rotación que también consume CPU */}
                 </div>
 
                 <h2 className="text-4xl font-serif uppercase tracking-tighter mb-2 text-brand-cream">

@@ -15,7 +15,7 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 const SERVICIOS_NOMBRES = {
   foto: 'Fotografía y Diseño Estratégico',
   video: 'Soluciones de Filmografía y Video',
-  diseño: 'Diseño y Branding Off/On-site',
+  diseño: 'Diseño y Branding',
   web: 'Despliegue Web'
 };
 

@@ -28,7 +28,7 @@ const Servicios = () => {
   const [formData, setFormData] = useState({
     fechas: [],
     servicios: [],
-    nivelEdicion: "",
+    nivelEdicion: [], // CAMBIO: Ahora es un Array para permitir selecciones múltiples
     celular: "",
     empresa: "" 
   });
@@ -68,6 +68,7 @@ const Servicios = () => {
 
   const handleLogout = () => signOut(auth);
 
+  // Función clave para tildar/destildar opciones
   const toggleOption = (list, item) => 
     list.includes(item) ? list.filter(i => i !== item) : [...list, item];
 
@@ -80,6 +81,11 @@ const Servicios = () => {
 
     setIsSending(true);
 
+    // Formateamos los niveles de edición para que queden como texto en el email
+    const nivelesEdicionTexto = formData.nivelEdicion.length > 0 
+      ? formData.nivelEdicion.join(", ") 
+      : "N/A";
+
     try {
       // 1. GUARDAR EN FIREBASE
       const docRef = await addDoc(collection(db, "presupuestos"), {
@@ -90,7 +96,7 @@ const Servicios = () => {
         celular: formData.celular,
         fechas: formData.fechas.sort(),
         servicios: formData.servicios.map(s => SERVICIOS_NOMBRES[s]),
-        nivelEdicion: formData.nivelEdicion || "N/A",
+        nivelEdicion: formData.nivelEdicion, // Se guarda el array completo en Firebase
         fecha: serverTimestamp(),
         estado: "Procesando"
       });
@@ -103,7 +109,7 @@ const Servicios = () => {
         celular: formData.celular,
         servicios: formData.servicios.map(s => SERVICIOS_NOMBRES[s]).join(", "),
         fechas: formData.fechas.sort().join(", ") + " de Mayo",
-        nivelEdicion: formData.nivelEdicion || "N/A",
+        nivelEdicion: nivelesEdicionTexto, // Pasamos el texto unido por comas
         id_pedido: docRef.id 
       };
 
@@ -116,10 +122,12 @@ const Servicios = () => {
       );
 
       setShowSuccess(true);
+      
+      // Reseteamos el formulario
       setFormData({
         fechas: [],
         servicios: [],
-        nivelEdicion: "",
+        nivelEdicion: [],
         celular: "",
         empresa: ""
       });
@@ -293,20 +301,21 @@ const Servicios = () => {
                     ].map(plan => (
                       <button
                         key={plan.id}
-                        onClick={() => setFormData({...formData, nivelEdicion: plan.id})}
+                        // CAMBIO: Ahora usamos toggleOption para permitir elegir más de uno
+                        onClick={() => setFormData({...formData, nivelEdicion: toggleOption(formData.nivelEdicion, plan.id)})}
                         className={`p-6 border text-left flex flex-col gap-3 transition-all duration-300 ${
-                          formData.nivelEdicion === plan.id 
+                          formData.nivelEdicion.includes(plan.id) 
                             ? 'bg-brand-blue/10 border-brand-blue shadow-[0_0_15px_rgba(0,112,243,0.1)]' 
                             : 'bg-mining-dark/20 border-zinc-500 hover:border-zinc-700'
                         }`}
                       >
                         <div className="flex justify-between items-start w-full gap-4">
                           <span className={`text-[10px] uppercase font-bold tracking-widest leading-relaxed ${
-                            formData.nivelEdicion === plan.id ? 'text-brand-blue' : 'text-brand-white'
+                            formData.nivelEdicion.includes(plan.id) ? 'text-brand-blue' : 'text-brand-white'
                           }`}>
                             {plan.titulo}
                           </span>
-                          <div className={`mt-0.5 transition-opacity duration-300 ${formData.nivelEdicion === plan.id ? 'opacity-100' : 'opacity-0'}`}>
+                          <div className={`mt-0.5 transition-opacity duration-300 ${formData.nivelEdicion.includes(plan.id) ? 'opacity-100' : 'opacity-0'}`}>
                             <Check size={14} className="text-brand-blue" />
                           </div>
                         </div>
@@ -351,6 +360,7 @@ const Servicios = () => {
               </div>
 
               <div className="mt-12 space-y-4">
+                {/* 1. LÓGICA DE GOOGLE / FORMULARIO */}
                 {!user ? (
                   <button 
                     onClick={handleLogin}
@@ -399,6 +409,17 @@ const Servicios = () => {
                     </button>
                   </motion.div>
                 )}
+
+                {/* 2. BOTÓN DE WHATSAPP (Ahora está afuera de la condición, se ve siempre) */}
+                <a 
+                  href="https://wa.me/542645063823?text=Hola! Me gustaría consultar el tarifario y la personalización de servicio."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full border border-green-500/40 bg-green-500/10 text-green-400 py-4 font-bold flex items-center justify-center gap-3 hover:bg-green-600 hover:text-white transition-all text-[10px] tracking-[0.2em] uppercase text-center px-4 mt-8"
+                >
+                  <FaWhatsapp size={18} className="flex-shrink-0" />
+                  Consultar tarifario y personalización de servicio
+                </a>
               </div>
             </div>
           </aside>

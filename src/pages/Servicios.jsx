@@ -196,7 +196,7 @@ const Servicios = () => {
                   },
                   { 
                     id: 'diseño', 
-                    label: 'Diseño y Branding Off/On-site', 
+                    label: 'Diseño y Branding', 
                     desc: 'Servicio completo de desarrollo visual por marca. Incluye manual de marca para el evento, folletería técnica y carruseles de alto impacto.',
                     icon: <Palette size={20}/> 
                   },

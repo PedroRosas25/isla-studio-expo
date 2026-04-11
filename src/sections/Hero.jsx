@@ -84,7 +84,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="block 2xl:hidden text-center mt-0 border-t border-zinc-900 pt-0 relative -top-40"
+              className="block 2xl:hidden text-center mt-0 border-t border-zinc-900 pt-0 relative -top-40 -mb-39"
             >
               <img 
                 src="/logo-expo.png" 

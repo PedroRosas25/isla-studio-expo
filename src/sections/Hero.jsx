@@ -87,7 +87,6 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.8 }}
               className="block 2xl:hidden text-center mt-20 lg:mt-32 border-t border-zinc-900 pt-12"
             >
-              <p className="text-zinc-700 text-[9px] uppercase tracking-[0.4em] mb-6 font-bold">Proveedor Audiovisual</p>
               <img 
                 src="/logo-expo.png" 
                 alt="Logo Expo Minera San Juan" 

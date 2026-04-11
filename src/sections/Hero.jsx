@@ -63,8 +63,8 @@ const Hero = () => {
                 </Link>
               </div>
               {/* ZONA VERDE - VERSIÓN CELULAR (Oculto en PC) */}
-              {/* Se coloca en el flujo normal para que no se superponga con la Expo */}
-              <div className="flex md:hidden items-center justify-start gap-4 pt-4 w-full">
+              {/* TRUCO: Usamos relative y -top para subir visualmente sin empujar el botón */}
+              <div className="flex md:hidden items-center justify-start gap-4 w-full relative -top-12 z-10">
                 <img 
                   src="/logo-isla2.png" 
                   alt="Logo Isla Studio" 
@@ -78,14 +78,13 @@ const Hero = () => {
               </div>
             </div>
 
-
             {/* Logo de la Expo - Versión Inferior (MÓVILES Y PANTALLAS < 1536px) */}
+            {/* Subimos a -top-40 para que persiga a los logos de arriba sin desarmar la página */}
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              // ACÁ ESTÁ EL TRUCO: relative y -top-12 lo suben sin mover el resto de la página
-              className="block 2xl:hidden text-center mt-0 border-t border-zinc-900 pt-0 relative -top-28"
+              className="block 2xl:hidden text-center mt-0 border-t border-zinc-900 pt-0 relative -top-40"
             >
               <img 
                 src="/logo-expo.png" 

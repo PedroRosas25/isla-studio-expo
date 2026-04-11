@@ -73,26 +73,37 @@ const Navbar = () => {
       <nav className="fixed top-0 left-0 right-0 z-[100] transition-all duration-300 bg-zinc-950/80 backdrop-blur-md border-b border-white/[0.05]">
         <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center relative">
           
-          {/* 1. ZONA IZQUIERDA: LOGO */}
+          {/* 1. ZONA IZQUIERDA: LOGO Y COBRANDING */}
           <Link 
             to="/expo" 
             onClick={scrollToTop} 
-            className={`relative z-[200] flex items-center gap-3 group transition-colors duration-500 ${isOpen ? 'text-brand-cream' : ''}`}
+            className={`relative z-[200] flex items-center gap-3 sm:gap-4 group transition-colors duration-500 ${isOpen ? 'text-brand-cream' : ''}`}
           >
             <img 
               src="/logo-isla.png" 
               alt="Isla Studio" 
               className="h-8 w-auto transition-all group-hover:scale-105" 
             />
-            <div className="flex flex-col">
+            {/* Ocultamos el texto de Isla en celulares muy chicos para que entren ambos logos cómodos */}
+            <div className="hidden sm:flex flex-col">
               <span className="font-serif text-xl tracking-tighter leading-none">
                 <span className="text-white">ISLA</span>
                 <span className="text-brand-blue font-bold italic ml-1.5">STUDIO</span>
               </span>
-              <span className="text-[8px] uppercase tracking-[0.4em] text-zinc-500 font-bold hidden sm:block mt-1">
+              <span className="text-[8px] uppercase tracking-[0.4em] text-zinc-500 font-bold hidden md:block mt-1">
                 Creative Agency
               </span>
             </div>
+
+            {/* Separador vertical sutil */}
+            <div className="h-6 w-[1px] bg-white/20 ml-2"></div>
+
+            {/* Logo Compañía de Negocios (SILUETA BLANCA PERFECTA) */}
+            <img 
+              src="/compañiasinfondo.png" 
+              alt="Compañía de Negocios" 
+              className="h-8 sm:h-9 w-auto brightness-0 invert opacity-70 group-hover:opacity-100 transition-all" 
+            />
           </Link>
 
           {/* 2. ZONA DERECHA: TODOS LOS LINKS Y BOTONES UNIFICADOS */}
@@ -148,7 +159,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* MENÚ MOBILE DESPLEGABLE (Sin cambios) */}
+      {/* MENÚ MOBILE DESPLEGABLE */}
       <AnimatePresence>
         {isOpen && (
           <motion.div 
@@ -160,12 +171,21 @@ const Navbar = () => {
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, backgroundSize: '40px 40px' }}></div>
 
             <div className="flex items-center justify-between px-6 h-20 shrink-0 border-b border-white/5 relative z-10">
-              <div className="flex flex-col">
+              
+              {/* COBRANDING EN EL MENÚ MÓVIL */}
+              <div className="flex items-center gap-3">
                 <span className="font-serif text-xl tracking-tighter leading-none">
                   <span className="text-white">ISLA</span>
                   <span className="text-brand-blue font-bold italic ml-1.5">STUDIO</span>
                 </span>
+                <div className="h-5 w-[1px] bg-white/20"></div>
+                <img 
+                  src="/compañiasinfondo.png" 
+                  alt="Compañía de Negocios" 
+                  className="h-8 sm:h-5 w-auto brightness-0 invert opacity-70" 
+                />
               </div>
+
               <button onClick={() => setIsOpen(false)} className="text-white p-2">
                 <X size={32} strokeWidth={1} />
               </button>

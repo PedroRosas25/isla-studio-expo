@@ -71,9 +71,9 @@ const Hero = () => {
                   className="h-50 w-auto object-contain opacity-80" 
                 />
                 <img 
-                  src="/compañia3.jpeg" 
+                  src="/compañiasinfondo.png" 
                   alt="Logo Compañía de Negocios" 
-                  className="h-10 w-auto object-contain opacity-80" 
+                  className="h-10 w-auto object-contain opacity-80 brightness-0 invert" 
                 />
               </div>
             </div>
@@ -152,9 +152,9 @@ const Hero = () => {
           className="h-52 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" 
         />
         <img 
-          src="/compañia3.jpeg" 
+          src="/compañiasinfondo.png" 
           alt="Logo Compañía de Negocios" 
-          className="h-16 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" 
+          className="h-16 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity brightness-0 invert" 
         />
       </div>
     </section>

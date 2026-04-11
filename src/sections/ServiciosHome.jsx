@@ -27,7 +27,7 @@ const serviciosPrincipales = [
 
 const ServiciosHome = () => {
   return (
-    <section id="servicios-info" className="py-32 bg-zinc-950 relative overflow-hidden">
+    <section id="servicios-info" className="py-12 bg-zinc-950 relative overflow-hidden">
       {/* Grilla técnica de fondo (Igual que el Hero para unión total) */}
       <div className="absolute inset-0 opacity-[0.065] pointer-events-none" 
            style={{ backgroundImage: `linear-gradient(#fff 2px, transparent 2px), linear-gradient(90deg, #ffffff 2px, transparent 2px)`, backgroundSize: '60px 60px' }}>

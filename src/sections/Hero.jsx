@@ -62,30 +62,30 @@ const Hero = () => {
                   <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
-            </div>
-
-            {/* ZONA VERDE: Logos de las empresas asociados */}
-              <div className="absolute bottom--1 left-1/2 -translate-x-1/2 flex items-center justify-center gap-10 w-full z-20">
+              {/* ZONA VERDE - VERSIÓN CELULAR (Oculto en PC) */}
+              {/* Se coloca en el flujo normal para que no se superponga con la Expo */}
+              <div className="flex md:hidden items-center justify-start gap-4 pt-4 w-full">
                 <img 
                   src="/logo-isla2.png" 
                   alt="Logo Isla Studio" 
-                  // Hacemos el logo de Isla mucho más alto para compensar
-                  className="h-20 sm:h-24 md:h-52 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" 
+                  className="h-50 w-auto object-contain opacity-80" 
                 />
                 <img 
                   src="/compañia3.jpeg" 
                   alt="Logo Compañía de Negocios" 
-                  // Achicamos el de Compañía para que queden parejos a la vista
-                  className="h-10 sm:h-12 md:h-16 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" 
+                  className="h-10 w-auto object-contain opacity-80" 
                 />
               </div>
+            </div>
+
 
             {/* Logo de la Expo - Versión Inferior (MÓVILES Y PANTALLAS < 1536px) */}
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="block 2xl:hidden text-center mt-20 lg:mt-32 border-t border-zinc-900 pt-12"
+              // ACÁ ESTÁ EL TRUCO: relative y -top-12 lo suben sin mover el resto de la página
+              className="block 2xl:hidden text-center mt-0 border-t border-zinc-900 pt-0 relative -top-28"
             >
               <img 
                 src="/logo-expo.png" 
@@ -144,6 +144,19 @@ const Hero = () => {
           <span className="text-[9px] text-zinc-700 uppercase tracking-[0.6em] rotate-90 mb-12">Explorar</span>
           <div className="w-[1px] h-24 bg-gradient-to-b from-brand-blue to-transparent"></div>
         </div>
+      </div>
+      {/* 4. ZONA VERDE - VERSIÓN PC (Oculto en Celulares) */}
+      <div className="hidden md:flex absolute bottom-0 left-1/2 -translate-x-1/2 items-center justify-center gap-10 w-full z-20 px-4">
+        <img 
+          src="/logo-isla2.png" 
+          alt="Logo Isla Studio" 
+          className="h-52 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" 
+        />
+        <img 
+          src="/compañia3.jpeg" 
+          alt="Logo Compañía de Negocios" 
+          className="h-16 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" 
+        />
       </div>
     </section>
   );

@@ -57,7 +57,7 @@ const Hero = () => {
             <div className="flex flex-col gap-10 mb-16 md:mb-0">
               <div className="flex flex-wrap gap-8">
                 {/* BOTÓN */}
-                <Link to="/servicios" className="px-12 py-5 bg-brand-blue text-white font-bold flex items-center gap-3 hover:bg-blue-600 transition-all group uppercase text-[10px] tracking-[0.2em] rounded-sm text-center w-fit">
+                <Link to="/servicios" className="relative z-50 px-12 py-5 bg-brand-blue text-white font-bold flex items-center gap-3 hover:bg-blue-600 transition-all group uppercase text-[10px] tracking-[0.2em] rounded-sm text-center w-fit">
                   Ver Catálogo de Servicios
                   <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
@@ -145,16 +145,21 @@ const Hero = () => {
         </div>
       </div>
       {/* 4. ZONA VERDE - VERSIÓN PC (Oculto en Celulares) */}
-      <div className="hidden md:flex absolute bottom-0 left-1/2 -translate-x-1/2 items-center justify-center gap-10 w-full z-20 px-4">
+      {/* Mantenemos absolute y bottom-0 para que no se mueva.
+          Agregamos pointer-events-none para que no tape el botón al hacer clic.
+      */}
+      <div className="hidden md:flex absolute bottom-0 left-1/2 -translate-x-1/2 items-center justify-center gap-10 w-full z-10 px-4 pointer-events-none">
         <img 
           src="/logo-isla2.png" 
           alt="Logo Isla Studio" 
-          className="h-52 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" 
+          // Agregamos pointer-events-auto para que el hover siga funcionando en el logo
+          className="h-52 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity pointer-events-auto" 
         />
         <img 
           src="/compañiasinfondo.png" 
           alt="Logo Compañía de Negocios" 
-          className="h-16 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity brightness-0 invert" 
+          // Agregamos pointer-events-auto para que el hover siga funcionando en el logo
+          className="h-16 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity brightness-0 invert pointer-events-auto" 
         />
       </div>
     </section>

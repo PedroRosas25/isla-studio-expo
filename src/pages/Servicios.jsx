@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Check, Camera, Video, Palette, Code, Mail, Phone, ArrowUpRight } from "lucide-react";
+import { Check, Camera, Video, Palette, Code, Mail, Phone, ArrowUpRight, Play, X } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { FaWhatsapp } from "react-icons/fa";
 import emailjs from '@emailjs/browser';
@@ -24,32 +24,32 @@ const Servicios = () => {
   const navigate = useNavigate();
   const [showSuccess, setShowSuccess] = useState(false);
   const [isSending, setIsSending] = useState(false);
+  
+  // ARREGLO 1: El estado del video tiene que estar acá adentro
+  const [videoAbierto, setVideoAbierto] = useState(null);
 
   const [formData, setFormData] = useState({
     fechas: [],
     servicios: [],
-    nivelEdicion: [], // CAMBIO: Ahora es un Array para permitir selecciones múltiples
+    nivelEdicion: [], 
     celular: "",
     empresa: "" 
   });
 
-  // Bloquear/Desbloquear scroll cuando aparece el modal
+  // Bloquear/Desbloquear scroll cuando aparece el modal (y ahora también cuando se abre el video)
+// Bloquear/Desbloquear scroll cuando aparece el modal o el video (VERSIÓN LIMPIA)
   useEffect(() => {
-    if (showSuccess) {
-      const scrollY = window.scrollY;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
-      document.body.style.overflowY = 'scroll'; 
+    if (showSuccess || videoAbierto) {
+      document.body.style.overflow = 'hidden';
     } else {
-      const scrollY = document.body.style.top;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      document.body.style.overflowY = '';
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      document.body.style.overflow = 'unset';
     }
-  }, [showSuccess]);
+
+    // Limpieza de seguridad por si el usuario cambia de página de golpe
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [showSuccess, videoAbierto]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -81,13 +81,11 @@ const Servicios = () => {
 
     setIsSending(true);
 
-    // Formateamos los niveles de edición para que queden como texto en el email
     const nivelesEdicionTexto = formData.nivelEdicion.length > 0 
       ? formData.nivelEdicion.join(", ") 
       : "N/A";
 
     try {
-      // 1. GUARDAR EN FIREBASE
       const docRef = await addDoc(collection(db, "presupuestos"), {
         userId: user.uid,
         userName: user.displayName,
@@ -96,12 +94,11 @@ const Servicios = () => {
         celular: formData.celular,
         fechas: formData.fechas.sort(),
         servicios: formData.servicios.map(s => SERVICIOS_NOMBRES[s]),
-        nivelEdicion: formData.nivelEdicion, // Se guarda el array completo en Firebase
+        nivelEdicion: formData.nivelEdicion,
         fecha: serverTimestamp(),
         estado: "Procesando"
       });
 
-      // 2. PARÁMETROS PARA EL EMAIL
       const emailParams = {
         empresa: formData.empresa,
         userName: user.displayName,
@@ -109,11 +106,10 @@ const Servicios = () => {
         celular: formData.celular,
         servicios: formData.servicios.map(s => SERVICIOS_NOMBRES[s]).join(", "),
         fechas: formData.fechas.sort().join(", ") + " de Mayo",
-        nivelEdicion: nivelesEdicionTexto, // Pasamos el texto unido por comas
+        nivelEdicion: nivelesEdicionTexto,
         id_pedido: docRef.id 
       };
 
-      // 3. ENVIAR EMAIL USANDO VARIABLES DE ENTORNO
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,   
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,  
@@ -123,7 +119,6 @@ const Servicios = () => {
 
       setShowSuccess(true);
       
-      // Reseteamos el formulario
       setFormData({
         fechas: [],
         servicios: [],
@@ -281,48 +276,71 @@ const Servicios = () => {
                       {
                         id: 'Básico',
                         titulo: 'Plan básico (Volumen alto)',
-                        desc: 'Optimizado para la cobertura en tiempo real. Incluye la entrega de 10 historias de Instagram. Captura vertical, perfeccionamiento de audio y subtitulado para consumo rápido y directo.'
+                        desc: 'Optimizado para la cobertura en tiempo real. Incluye la entrega de 10 historias de Instagram. Captura vertical, perfeccionamiento de audio y subtitulado para consumo rápido y directo.',
+                        video: '/BASICA.mp4' 
                       },
                       {
                         id: 'Intermedio',
                         titulo: 'Plan intermedio (Narrativo)',
-                        desc: 'Enfoque narrativo. Incluye hasta 5 contenidos (Reels) con cortes rítmicos, selección musical según contexto y diseño visual de subtítulos para mayor retención.'
+                        desc: 'Enfoque narrativo. Incluye hasta 5 contenidos (Reels) con cortes rítmicos, selección musical según contexto y diseño visual de subtítulos para mayor retención.',
+                        video: '/INTERMEDIO.mp4' 
                       },
                       {
                         id: 'Avanzado',
                         titulo: 'Plan avanzado (Cine-Digital)',
-                        desc: 'El estándar más alto. Incluye hasta 5 contenidos (Reels/Video de alta calidad) con edición profesional, corrección de color, recursos premium y animaciones avanzadas.'
+                        desc: 'El estándar más alto. Incluye hasta 5 contenidos (Reels/Video de alta calidad) con edición profesional, corrección de color, recursos premium y animaciones avanzadas.',
+                        video: '/AVANZADA.mp4' 
                       },
                       {
                         id: 'Institucional',
                         titulo: 'Plan institucional',
                         desc: 'Entrega de 1 contenido institucional de edición cinematográfica. Diseñado para medios masivos y presentaciones de alto nivel, con sonido masterizado para proyección institucional.'
+                      },
+                      {
+                        id: 'Integral',
+                        titulo: 'Plan Integral',
+                        desc: 'Máxima cobertura con tarifa preferencial. Incluye edición de nivel basico, intermedio y avanzado para un flujo constante de contenido. No incluye producción institucional.'
                       }
                     ].map(plan => (
-                      <button
+                      <div 
                         key={plan.id}
-                        // CAMBIO: Ahora usamos toggleOption para permitir elegir más de uno
-                        onClick={() => setFormData({...formData, nivelEdicion: toggleOption(formData.nivelEdicion, plan.id)})}
-                        className={`p-6 border text-left flex flex-col gap-3 transition-all duration-300 ${
+                        className={`relative p-6 border text-left flex flex-col justify-between gap-3 transition-all duration-300 cursor-pointer ${
                           formData.nivelEdicion.includes(plan.id) 
                             ? 'bg-brand-blue/10 border-brand-blue shadow-[0_0_15px_rgba(0,112,243,0.1)]' 
                             : 'bg-mining-dark/20 border-zinc-500 hover:border-zinc-700'
                         }`}
+                        onClick={() => setFormData({...formData, nivelEdicion: toggleOption(formData.nivelEdicion, plan.id)})}
                       >
-                        <div className="flex justify-between items-start w-full gap-4">
-                          <span className={`text-[10px] uppercase font-bold tracking-widest leading-relaxed ${
-                            formData.nivelEdicion.includes(plan.id) ? 'text-brand-blue' : 'text-brand-white'
-                          }`}>
-                            {plan.titulo}
-                          </span>
-                          <div className={`mt-0.5 transition-opacity duration-300 ${formData.nivelEdicion.includes(plan.id) ? 'opacity-100' : 'opacity-0'}`}>
-                            <Check size={14} className="text-brand-blue" />
+                        <div>
+                          <div className="flex justify-between items-start w-full gap-4 mb-3">
+                            <span className={`text-[10px] uppercase font-bold tracking-widest leading-relaxed ${
+                              formData.nivelEdicion.includes(plan.id) ? 'text-brand-blue' : 'text-brand-white'
+                            }`}>
+                              {plan.titulo}
+                            </span>
+                            <div className={`transition-opacity duration-300 ${formData.nivelEdicion.includes(plan.id) ? 'opacity-100' : 'opacity-0'}`}>
+                              <Check size={14} className="text-brand-blue" />
+                            </div>
                           </div>
+                          <p className="text-white text-xs font-light leading-relaxed">
+                            {plan.desc}
+                          </p>
                         </div>
-                        <p className="text-white text-xs font-light leading-relaxed">
-                          {plan.desc}
-                        </p>
-                      </button>
+
+                        {/* BOTÓN DE VER EJEMPLO */}
+                        {plan.video && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation(); 
+                              setVideoAbierto(plan.video);
+                            }}
+                            className="mt-4 flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest text-zinc-400 hover:text-brand-cream transition-colors w-fit border border-zinc-700 hover:border-zinc-500 px-3 py-1.5 rounded-sm bg-zinc-900/50"
+                          >
+                            <Play size={12} className="text-brand-blue" />
+                            Ejemplo
+                          </button>
+                        )}
+                      </div>
                     ))}
                   </div>
                 </motion.section>
@@ -410,7 +428,6 @@ const Servicios = () => {
                   </motion.div>
                 )}
 
-                {/* 2. BOTÓN DE WHATSAPP (Ahora está afuera de la condición, se ve siempre) */}
                 <a 
                   href="https://wa.me/542645063823?text=Hola! Me gustaría consultar el tarifario y la personalización de servicio."
                   target="_blank"
@@ -490,6 +507,51 @@ const Servicios = () => {
           </div>
         )}
       </AnimatePresence>
+
+{/* REPRODUCTOR DE VIDEO MODAL (OPTIMIZADO) */}
+      <AnimatePresence>
+        {videoAbierto && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            // OPTIMIZACIÓN 1: Chau blur, usamos un fondo oscuro sólido (bg-black/95)
+            className="fixed inset-0 z-[500] flex items-center justify-center bg-black/95 p-4 sm:p-10"
+            onClick={() => setVideoAbierto(null)} 
+            style={{ willChange: "opacity" }}
+          >
+            <button 
+              className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors z-10"
+              onClick={() => setVideoAbierto(null)}
+            >
+              <X size={36} strokeWidth={1} />
+            </button>
+
+            <motion.div 
+              initial={{ scale: 0.96, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.96, opacity: 0 }}
+              // OPTIMIZACIÓN 2: Transición más rápida y fluida
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              onClick={(e) => e.stopPropagation()} 
+              // OPTIMIZACIÓN 3: Aceleración por hardware forzada (GPU)
+              style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
+              // Le saqué la sombra gigante y dejé un shadow-2xl estándar que es más ligero
+              className="relative w-full max-w-5xl aspect-video bg-black rounded-lg overflow-hidden shadow-2xl border border-white/10"
+            >
+              <video 
+                src={videoAbierto} 
+                controls 
+                autoPlay 
+                playsInline 
+                className="w-full h-full object-contain bg-black"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </div>
   );
 };

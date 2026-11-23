@@ -1,31 +1,28 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'; // Corregido: useLocation en minúscula
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react'; 
+import { AnimatePresence } from 'framer-motion';
 
-// COMPONENTES EXPO
+import Hero from './components/Hero';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Hero from './sections/Hero';
-import ServiciosHome from './sections/ServiciosHome';
 import Servicios from './pages/Servicios';
-import MisPresupuestos from './pages/MisPresupuestos';
-import Admin from "./pages/Admin";
-
-// COMPONENTES PRINCIPALES (VIEJOS)
+import Contacto from './pages/Contacto';
+import Clientes from './pages/Clientes'
+import ProyectoDetalle from './pages/ProyectoDetalle';
+import Trabajos from './pages/Trabajos';
+import SplashScreen from './components/SplashScreen';
 import HomePrincipal from './pages/HomePrincipal';
-
-// LEGALES
 import Privacidad from './pages/legales/Privacidad';
 import Cookies from './pages/legales/Cookies';
 import AvisoLegal from './pages/legales/AvisoLegal';
 
-// 1. CREAMOS ESTE COMPONENTE PARA MANEJAR EL TÍTULO
 function PageTitleHandler() {
   const location = useLocation();
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'auto';
+      window.history.scrollRestoration = 'manual';
     }
   }, []);
 
@@ -41,35 +38,36 @@ function PageTitleHandler() {
     }
   }, [location]);
 
-  return null; // Este componente no renderiza nada visualmente
+  return null; 
 }
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
+  // ELIMINAMOS EL USE-EFFECT. AHORA EL COMPONENTE SPLASH DECIDE CUÁNDO TERMINAR.
+
   return (
     <Router>
-      {/* 2. LO PONEMOS AQUÍ, ADENTRO DEL ROUTER */}
       <PageTitleHandler />
-      <ScrollToTop /> 
+      <ScrollToTop />
+
+      <AnimatePresence mode="wait">
+        {showSplash && (
+           // Cuando el SplashScreen termina su magia, nos avisa ejecutando finishLoading
+          <SplashScreen key="splash" finishLoading={() => setShowSplash(false)} />
+        )}
+      </AnimatePresence>
       
-      <div className="flex flex-col min-h-screen bg-zinc-950">
+      <div className="flex flex-col min-h-screen bg-isla-black">
         <main className="flex-grow">
           <Routes>
-            {/* 1. LANDING PRINCIPAL (LA VIEJA) */}
             <Route path="/" element={<HomePrincipal />} />
-
-            {/* 2. LANDING EXPO Y SUS RUTAS */}
-            <Route path="/expo" element={
-              <>
-                <Navbar />
-                <Hero />
-                <ServiciosHome />
-                <Footer />
-              </>
-            } />
-
-            <Route path="/servicios" element={<><Navbar /><Servicios /><Footer /></>} />
-            <Route path="/mis-presupuestos" element={<><Navbar /><MisPresupuestos /><Footer /></>} />
-            <Route path="/admin-isla" element={<><Navbar /><Admin /><Footer /></>} />
+            <Route path="/expo" element={<><Navbar /><Hero /><Footer /></>} />
+            <Route path="/servicios" element={<Servicios />} />
+            <Route path="/contacto" element={<Contacto />} />
+            <Route path="/clientes" element={<Clientes />} />
+            <Route path="/proyecto/:id" element={<ProyectoDetalle />} />
+            <Route path="/trabajos" element={<Trabajos />} />
             
             <Route path="/privacidad" element={<><Privacidad /><Footer /></>} />
             <Route path="/cookies" element={<><Cookies /><Footer /></>} />

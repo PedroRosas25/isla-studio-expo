@@ -1,80 +1,108 @@
-import { Link } from "react-router-dom";
-import { Instagram, Linkedin, MessageCircle, Globe } from "lucide-react";
-import { FaTiktok, FaWhatsapp } from "react-icons/fa"; // Necesitás: npm install react-icons
+import { ArrowUpRight } from "lucide-react";
+import FranjaTypewriter from './FranjaTypeWriter'; 
+import logoIsotipo from '../assets/logoladrillo.svg';
+
+// 1. Importamos el componente Link de React Router
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-zinc-950 border-t border-zinc-900 pt-20 pb-10 relative z-10">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+    <footer className="relative w-full min-h-screen bg-isla-green text-isla-almond flex flex-col font-sans overflow-hidden">
+      
+      {/* LA FRANJA TYPEWRITER DE TECHO */}
+      <div className="relative z-20 w-full shrink-0">
+        <FranjaTypewriter />
+      </div>
+
+      {/* CONTENEDOR PRINCIPAL */}
+      <div className="relative z-10 flex flex-col flex-1 p-6 md:p-12 lg:p-20">
+        
+        {/* SECCIÓN SUPERIOR: Layout Asimétrico */}
+        <div className="flex flex-col lg:flex-row justify-between gap-16 lg:gap-8 mt-4 md:mt-8">
           
-          {/* COLUMNA 1: MARCA */}
-          <div className="col-span-1">
-            <h3 className="text-xl font-serif font-bold text-brand-cream mb-4 tracking-tighter uppercase">
-              ISLA <span className="text-brand-blue italic text-2xl">STUDIO</span>
+          <div className="max-w-xl flex flex-col items-start gap-8">
+            <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-[1.1]">
+              Hagamos que tu marca <span className="text-isla-terra">hable por sí sola.</span>
             </h3>
-            <p className="text-zinc-600 text-[9px] uppercase tracking-[0.4em] leading-relaxed mb-6">
-              San Juan, Argentina <br />
-              Exploración Visual Industrial
-            </p>
-            <div className="flex gap-4">
-              <a href="https://www.instagram.com/studios_isla/" target="_blank" rel="noreferrer" className="text-zinc-500 hover:text-brand-cream transition-colors">
-                <Instagram size={20} />
+            
+            <a 
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=islastudio39@gmail.com" 
+              target="_blank" 
+              rel="noreferrer"
+              className="inline-flex items-center gap-3 border border-isla-almond/30 px-8 py-4 rounded-full uppercase tracking-[0.2em] text-xs font-bold hover:bg-isla-terra hover:text-white hover:border-isla-terra transition-all group backdrop-blur-sm"
+            >
+              islastudio39@gmail.com
+              <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            </a>
+          </div>
+
+          <div className="flex gap-16 md:gap-24">
+            
+            <div className="flex flex-col gap-6 text-sm md:text-base font-bold uppercase tracking-widest">
+              <span className="text-isla-terra text-xs tracking-[0.2em] mb-2">Explorar</span>
+              
+              {/* 2. Reemplazamos la etiqueta <a> por <Link> para Servicios */}
+              <Link to="/trabajos" className="hover:text-isla-terra transition-colors flex items-center gap-1 group w-fit">
+                Trabajos <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </Link>
+
+              <Link to="/servicios" className="hover:text-isla-terra transition-colors flex items-center gap-1 group w-fit">
+                Servicios <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </Link>
+
+              <Link to="/clientes" className="hover:text-isla-terra transition-colors flex items-center gap-1 group w-fit">
+                Clientes <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </Link>
+              
+              {/* 3. Agregamos la barra "/" para que siempre vuelva al Home a buscar la sección */}
+              <Link to="/contacto" className="hover:text-isla-terra transition-colors flex items-center gap-1 group w-fit">
+                Contáctanos <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </Link>
+            </div>
+
+            <div className="flex flex-col gap-6 text-sm md:text-base font-bold uppercase tracking-widest">
+              <span className="text-isla-terra text-xs tracking-[0.2em] mb-2">Social</span>
+              <a href="https://wa.me/5492644437135" target="_blank" rel="noreferrer" className="hover:text-isla-terra transition-colors flex items-center gap-1 group w-fit">
+                WhatsApp <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </a>
-              <a href="https://www.tiktok.com/@isla.studios" target="_blank" rel="noreferrer" className="text-zinc-500 hover:text-brand-cream transition-colors">
-                <FaTiktok size={18} />
+              <a href="https://www.instagram.com/studios_isla/" target="_blank" rel="noreferrer" className="hover:text-isla-terra transition-colors flex items-center gap-1 group w-fit">
+                Instagram <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </a>
-              <a href="https://wa.me/5492645063823" target="_blank" rel="noreferrer" className="text-[#25D366] hover:scale-110 transition-transform">
-                <FaWhatsapp size={22} />
+              <a href="https://www.tiktok.com/@isla.studios" target="_blank" rel="noreferrer" className="hover:text-isla-terra transition-colors flex items-center gap-1 group w-fit">
+                TikTok <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </a>
             </div>
-          </div>
 
-        {/* COLUMNA 2: LEGAL */}
-        <div>
-        <span className="text-brand-blue font-bold text-[10px] uppercase tracking-[0.3em] block mb-6">Legal</span>
-        <ul className="flex flex-col gap-3 text-[10px] uppercase tracking-widest font-bold">
-            <li>
-            <a href="/aviso-legal" target="_blank" rel="noreferrer" className="hover:text-brand-cream transition-colors text-zinc-500">
-                Aviso Legal
-            </a>
-            </li>
-            <li>
-            <a href="/privacidad" target="_blank" rel="noreferrer" className="hover:text-brand-cream transition-colors text-zinc-500">
-                Privacidad
-            </a>
-            </li>
-            <li>
-            <a href="/cookies" target="_blank" rel="noreferrer" className="hover:text-brand-cream transition-colors text-zinc-500">
-                Cookies
-            </a>
-            </li>
-        </ul>
-        </div>
-
-          {/* COLUMNA 3 & 4: MAPA */}
-          <div className="md:col-span-2">
-            <span className="text-brand-blue font-bold text-[10px] uppercase tracking-[0.3em] block mb-6">Ubicación Central</span>
-            <div className="w-full h-48 bg-zinc-900 rounded-sm overflow-hidden  hover:opacity-100 transition-all duration-700">
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3400.4428521428867!2d-68.5289732!3d-31.539458899999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x96814026229500e9%3A0xfec2e1813c73216!2sEl%20Nuevo%20Diario!5e0!3m2!1ses-419!2sar!4v1773169931112!5m2!1ses-419!2sar" 
-                width="100%" 
-                height="100%" 
-                style={{ border: 0 }} 
-                allowFullScreen="" 
-                loading="lazy"
-              ></iframe>
-            </div>
           </div>
         </div>
 
-        <div className="border-t border-zinc-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[8px] text-zinc-700 uppercase tracking-[0.5em]">© 2026 ISLA STUDIO. Made in San Juan.</p>
-          <div className="flex items-center gap-2 text-zinc-800">
-            <Globe size={10} />
-            <span className="text-[8px] uppercase tracking-[0.5em]">Global Standards</span>
-          </div>
+        {/* SECCIÓN MEDIA (EL LOGO) */}
+        <div className="flex-1 flex justify-center items-center py-12 md:py-8 pointer-events-none opacity-40">
+          <img 
+            src={logoIsotipo} 
+            alt="Isla Studio Marca de Agua" 
+            className="w-full max-w-[15rem] md:max-w-[20rem] lg:max-w-[25rem] object-contain drop-shadow-2xl" 
+          />
         </div>
+
+        {/* SECCIÓN INFERIOR: Copyright, Ubicación y Legales */}
+        <div className="flex flex-col lg:flex-row justify-between items-center border-t border-isla-almond/20 pt-8 text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold gap-6 lg:gap-0 shrink-0">
+          
+          <div className="flex flex-col md:flex-row gap-2 md:gap-8 items-center text-center">
+            <span>© {new Date().getFullYear()} ISLA STUDIO</span>
+            <span className="hidden md:block text-isla-almond/30">|</span>
+            <span className="text-isla-terra">San Juan, Argentina</span>
+          </div>
+          
+          <div className="flex gap-8">
+            {/* Las páginas legales las dejamos con <a> porque usan target="_blank" para abrirse en pestaña nueva */}
+            <a href="/aviso-legal" target="_blank" rel="noreferrer" className="hover:text-isla-terra transition-colors uppercase">Aviso Legal</a>
+            <a href="/privacidad" target="_blank" rel="noreferrer" className="hover:text-isla-terra transition-colors uppercase">Privacidad</a>
+            <a href="/cookies" target="_blank" rel="noreferrer" className="hover:text-isla-terra transition-colors uppercase">Cookies</a>
+          </div>
+
+        </div>
+
       </div>
     </footer>
   );

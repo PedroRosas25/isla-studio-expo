@@ -1,42 +1,34 @@
-import React from 'react';
-// IMPORTACIÓN DE ESTILOS VIEJOS
-import '../styles/OldLanding.css'; 
+import Navbar from '../components/Navbar.jsx';
+import Hero from '../components/Hero.jsx';
+import Manifiesto from '../components/Manifiesto.jsx';
+import ProyectosDestacados from '../components/ProyectosDestacados.jsx';
+import GridProyectos from '../components/GridProyectos.jsx';
+import Footer from '../components/Footer.jsx';
+import ScrollToTop from '../components/ScrollToTop.jsx';
 
-// IMPORTACIÓN DE COMPONENTES RENOMBRADOS
-import NavbarOld from '../components/NavbarOld';
-import HeroOld from '../components/HeroOld';
-import Valores from '../components/Valores';
-import ServiciosDetallados from '../components/ServiciosDetallados';
-import PlanesOld from '../components/PlanesOld';
-import EquipoOld from '../components/EquipoOld';
-import ContactoOld from '../components/ContactoOld';
-import WppFloat from '../components/WppFloat';
-
-const HomePrincipal = () => {
-
+// 1. CAMBIAMOS EL NOMBRE DE LA FUNCIÓN PARA QUE NO CHOQUE CON APP.JSX
+function HomePrincipal() {
   return (
-    /* Usamos una clase wrapper para aislar los estilos viejos */
-    <div className="old-landing-wrapper">
-      <NavbarOld />
+    // 2. APLICAMOS LA PALETA DE MARCA (bg-isla-black en vez de bg-black)
+    <div className="font-sans antialiased bg-isla-black">
       
-      <main>
-        <HeroOld />
-        
-        {/* Secciones intermedias */}
-        <Valores />
-        <ServiciosDetallados />
-        <PlanesOld />
-        <EquipoOld />
-        <ContactoOld />
+      {/* LA MANTA SÓLIDA */}
+      <main className="relative z-40 bg-isla-black mb-[100vh] shadow-[0_20px_50px_rgba(0,0,0,1)]">
+        <Navbar />
+        <Hero />
+        <ProyectosDestacados />
+        <Manifiesto />
+        <GridProyectos />
       </main>
 
-      {/* Botón flotante de WhatsApp */}
-      <WppFloat />
+      {/* EL FOOTER CLAVADO AL FONDO */}
+      <div className="fixed bottom-0 left-0 w-full h-screen z-0">
+        <Footer />
+      </div>
 
-      {/* Si tenías un Footer en la landing vieja que no estaba como componente, 
-          podés pegarlo acá abajo o crear FooterOld.jsx */}
     </div>
   );
-};
+}
 
+// 3. EXPORTAMOS CON EL NOMBRE CORRECTO
 export default HomePrincipal;

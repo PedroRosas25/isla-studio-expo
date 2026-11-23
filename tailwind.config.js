@@ -7,18 +7,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        'brand-blue': '#007AFF', 
-        'brand-dark': '#292A2C', 
-        'brand-cream': '#F5F2EB', 
-        'brand-grey': '#B0B0B0', 
-        'mining-dark': '#0a0a0a', // Mantenemos este para los fondos
+        // Paleta oficial de ISLA STUDIO
+        'isla-black': '#2B2522',
+        'isla-green': '#384C37',
+        'isla-terra': '#C87962',
+        'isla-almond': '#F4EAE5',
       },
       fontFamily: {
-        // Ahora 'sans' usará Montserrat por defecto en toda la web
+        // Reemplazamos la fuente 'sans' por defecto con Montserrat
         sans: ['Montserrat', 'sans-serif'],
-        // 'serif' usará Playfair Display para los títulos elegantes
-        serif: ['"Playfair Display"', 'serif'],
-      }
+      },
     },
   },
   plugins: [],

@@ -1,38 +1,39 @@
 @import "tailwindcss";
 
-/* 1. Importación directa de Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
-
 @theme {
-  /* Definimos las variables de fuente con el nombre exacto de Google */
+  /* 1. TIPOGRAFÍA OFICIAL */
+  /* Forzamos a que la fuente base del sistema sea la dictada por el manual */
   --font-sans: "Montserrat", sans-serif;
-  --font-serif: "Playfair Display", serif;
   
-  /* Colores de tu landing */
-  --color-brand-blue: #007AFF;
-  --color-brand-dark: #292A2C;
-  --color-brand-cream: #F5F2EB;
+  /* 2. PALETA CROMÁTICA EXACTA DE ISLA STUDIO */
+  /* Estos nombres crearán automáticamente clases como bg-isla-black o text-isla-terra */
+  --color-isla-black: #2B2522;
+  --color-isla-green: #384C37;
+  --color-isla-terra: #C87962;
+  --color-isla-almond: #F4EAE5;
 }
 
 @layer base {
-
   html {
     scroll-behavior: smooth;
   }
 
-  /* Forzamos a que el navegador aplique Montserrat a TODO el sitio */
+  /* 3. REGLAS GLOBALES INQUEBRANTABLES */
   * {
     font-family: var(--font-sans);
   }
 
   body {
-    background-color: #09090b; 
-    color: var(--color-brand-cream);
+    /* El Negro profundo y Blanco almendra como base del lienzo */
+    background-color: var(--color-isla-black); 
+    color: var(--color-isla-almond);
     -webkit-font-smoothing: antialiased;
+    /* Evita el scroll horizontal fantasma */
+    overflow-x: hidden; 
   }
 
-  /* Forzamos a que TODOS los títulos y elementos con clase .font-serif usen Playfair */
-  h1, h2, h3, h4, h5, h6, .font-serif {
-    font-family: var(--font-serif) !important;
+  /* Sobrescribimos cualquier título para que respete el manual y elimine los rastros de Playfair */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans) !important;
   }
 }
